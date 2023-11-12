@@ -1,7 +1,11 @@
 package christmas;
 
+import christmas.controller.MainController;
+import christmas.domain.PromotionManager;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        MainController controller = new MainController(new PromotionManager());
+        controller.start();
     }
 }
