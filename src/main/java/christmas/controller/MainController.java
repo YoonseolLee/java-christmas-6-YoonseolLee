@@ -22,6 +22,11 @@ public class MainController {
         // 평일/주말할인
         int everyDayDiscountAmount = DiscountCalculator.calculateEveryDayDiscount(order, visitingDate);
         OutputView.printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
+        // 특별할인
+        int specialDiscountAmount = DiscountCalculator.calculateSpeicalDiscount(visitingDate);
+        OutputView.printSpecialDiscountAmount(specialDiscountAmount);
+        // 증정이벤트
+
     }
 
     private VisitingDate receiveVisitingDate() {

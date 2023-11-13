@@ -24,5 +24,11 @@ public class DiscountCalculator {
         totalDiscount = totalDiscount + dDayDiscountAmount;
         return dDayDiscountAmount;
     }
+
+    public static int calculateSpeicalDiscount(VisitingDate visitingDate) {
+        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount();
+        totalDiscount = totalDiscount + specialDiscountAmount;
+        return specialDiscountAmount;
+    }
 }
 

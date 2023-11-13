@@ -44,6 +44,10 @@ public class OutputView {
         printMessage("크리스마스 디데이 할인: -" + dDayDiscountAmount + "원");
     }
 
+    public static void printSpecialDiscountAmount(int specialDiscountAmount) {
+        printMessage("특별 할인: -" + specialDiscountAmount + "원");
+    }
+
 //        OutputView.printMessage("특별 할인: ");
 //        OutputView.printMessage("증정 이벤트: ");
 }

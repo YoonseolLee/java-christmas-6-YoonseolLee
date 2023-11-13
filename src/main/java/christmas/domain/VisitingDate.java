@@ -37,4 +37,18 @@ public class VisitingDate {
         int day = visitingDate.getDayOfMonth();
         return day >= 1 && day <= 25;
     }
+
+    public int calculateSpecialDiscountAmount() {
+        if (!isSpecialDiscountDay()) {
+            return 0;
+        }
+        return 1000;
+    }
+
+    public boolean isSpecialDiscountDay() {
+        DayOfWeek dayOfWeek = visitingDate.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SUNDAY || visitingDate.isEqual(LocalDate.of(2023, 12, 25));
+    }
+
+
 }
