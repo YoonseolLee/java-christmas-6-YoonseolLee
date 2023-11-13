@@ -17,7 +17,7 @@ public class MainController {
         OutputView.printGreetings();
         VisitingDate visitingDate = InputView.getVisitingDate();
         Order order = InputView.getOrder();
-        visitingDate.printEventAnnae();
+        visitingDate.printEventPreview();
         order.printOrderedMenus();
         order.printTotalPriceBeforeDiscount();
     }
