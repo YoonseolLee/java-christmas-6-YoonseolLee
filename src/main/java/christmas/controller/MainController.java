@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.Order;
 import christmas.domain.PromotionManager;
 import christmas.domain.VisitingDate;
 import christmas.view.InputView;
@@ -14,11 +15,7 @@ public class MainController {
 
     public void start() {
         OutputView.printGreetings();
-        VisitingDate visitingDate = getValidVisitingDate();
-
-    }
-
-    private VisitingDate getValidVisitingDate() {
-        return manager.getValidInput(() -> new VisitingDate(InputView.getVisitingDate()));
+        VisitingDate visitingDate = InputView.getVisitingDate();
+        Order order = InputView.getOrder();
     }
 }
