@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.view.OutputView;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Order {
@@ -30,5 +31,10 @@ public class Order {
         OutputView.printNewLine();
     }
 
+    public void printTotalPriceBeforeDiscount() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        OutputView.printMessage("<할인 전 총주문 금액>");
+        OutputView.printMessage(formatter.format(totalPriceBeforeDiscount) + "원");
+    }
 
 }
