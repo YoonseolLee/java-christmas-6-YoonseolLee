@@ -37,4 +37,24 @@ public class Order {
         OutputView.printMessage(formatter.format(totalPriceBeforeDiscount) + "원");
     }
 
+    public int getDessertCount() {
+        int dessertCount = 0;
+        for (Menu menu : orderedMenus) {
+            if (menu.isDessert()) {
+                dessertCount += menu.getQuantity();
+            }
+        }
+        return dessertCount;
+    }
+
+    public int getMainCount() {
+        int mainCount = 0;
+        for (Menu menu : orderedMenus) {
+            if (menu.isMain()) {
+                mainCount += menu.getQuantity();
+            }
+        }
+        return mainCount;
+    }
+
 }

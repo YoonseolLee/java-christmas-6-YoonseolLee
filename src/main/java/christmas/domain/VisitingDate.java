@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.view.OutputView;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class VisitingDate {
@@ -17,5 +18,10 @@ public class VisitingDate {
     public void printEventPreview() {
         OutputView.printMessage("12월 " + visitingDate.getDayOfMonth() + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         OutputView.printNewLine();
+    }
+
+    public boolean isWeekend() {
+        DayOfWeek dayOfWeek = visitingDate.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
 }

@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.DiscountCalculator;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
 import christmas.view.InputView;
@@ -13,5 +14,6 @@ public class MainController {
         visitingDate.printEventPreview();
         order.printOrderedMenus();
         order.printTotalPriceBeforeDiscount();
+        DiscountCalculator.calculateEveryDayDiscount(order, visitingDate);
     }
 }

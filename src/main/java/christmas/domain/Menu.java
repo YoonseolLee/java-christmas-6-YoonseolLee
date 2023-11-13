@@ -16,4 +16,12 @@ public class Menu {
     public int getQuantity() {
         return quantity;
     }
+
+    public boolean isDessert() {
+        return menuBoard.getSort().equals("Dessert");
+    }
+
+    public boolean isMain() {
+        return menuBoard.getSort().equals("Main");
+    }
 }
