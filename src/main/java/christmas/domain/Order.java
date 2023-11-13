@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.view.OutputView;
 import java.util.List;
 
 public class Order {
@@ -21,4 +22,13 @@ public class Order {
                 .mapToInt(menu -> menu.getMenuBoard().getPrice() * menu.getQuantity())
                 .sum();
     }
+
+    public void printOrderedMenus() {
+        OutputView.printMessage("<주문 메뉴>");
+        orderedMenus.forEach(menu ->
+                OutputView.printMessage(menu.getMenuBoard().toString() + " " + menu.getQuantity() + "개"));
+        OutputView.printNewLine();
+    }
+
+
 }
