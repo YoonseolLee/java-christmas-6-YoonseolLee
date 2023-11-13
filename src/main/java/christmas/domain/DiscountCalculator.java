@@ -5,6 +5,10 @@ public class DiscountCalculator {
     private static final int WEEKDAY_DISCOUNT_AMOUNT = 2023;
     public static int totalDiscount = 0;
 
+    public static int getTotalDiscount() {
+        return totalDiscount;
+    }
+
 
     public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
         int everyDayDiscountAmount = order.getMainCount() * WEEKEND_DISCOUNT_AMOUNT;
@@ -15,8 +19,10 @@ public class DiscountCalculator {
         return everyDayDiscountAmount;
     }
 
-    public static int getTotalDiscount() {
-        return totalDiscount;
+    public static int calculateDDayDiscount(VisitingDate visitingDate) {
+        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount();
+        totalDiscount = totalDiscount + dDayDiscountAmount;
+        return dDayDiscountAmount;
     }
 }
 

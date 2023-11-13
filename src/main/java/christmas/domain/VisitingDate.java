@@ -24,4 +24,17 @@ public class VisitingDate {
         DayOfWeek dayOfWeek = visitingDate.getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
+
+    public int calculateDDayDiscountAmount() {
+        if (!isDdayDiscountPeriod()) {
+            return 0;
+        }
+        int day = visitingDate.getDayOfMonth();
+        return 1000 + (day - 1) * 100;
+    }
+
+    public boolean isDdayDiscountPeriod() {
+        int day = visitingDate.getDayOfMonth();
+        return day >= 1 && day <= 25;
+    }
 }

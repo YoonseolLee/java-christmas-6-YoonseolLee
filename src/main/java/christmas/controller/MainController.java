@@ -8,12 +8,40 @@ import christmas.view.OutputView;
 
 public class MainController {
     public void start() {
-        OutputView.printGreetings();
+        VisitingDate visitingDate = receiveVisitingDate();
+        Order order = receiveOrder();
+        printOrderedMenus(visitingDate, order);
+        printTotalPriceBeforeDiscount(order);
+
+        OutputView.printGiveaways();
+        // 크리스마스 디데이 할인
+        OutputView.printNewLine();
+        OutputView.printMessage("<혜택 내역>");
+        int dDayDiscountAmount = DiscountCalculator.calculateDDayDiscount(visitingDate);
+        OutputView.printDdayDiscountAmount(dDayDiscountAmount);
+        // 평일/주말할인
+        int everyDayDiscountAmount = DiscountCalculator.calculateEveryDayDiscount(order, visitingDate);
+        OutputView.printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
+    }
+
+    private VisitingDate receiveVisitingDate() {
         VisitingDate visitingDate = InputView.getVisitingDate();
+        return visitingDate;
+    }
+
+    private Order receiveOrder() {
         Order order = InputView.getOrder();
+        return order;
+    }
+
+    private void printOrderedMenus(VisitingDate visitingDate, Order order) {
         visitingDate.printEventPreview();
         order.printOrderedMenus();
-        order.printTotalPriceBeforeDiscount();
-        DiscountCalculator.calculateEveryDayDiscount(order, visitingDate);
     }
+
+    private void printTotalPriceBeforeDiscount(Order order) {
+        order.printTotalPriceBeforeDiscount();
+    }
+
+
 }

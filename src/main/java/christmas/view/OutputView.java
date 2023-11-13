@@ -25,12 +25,13 @@ public class OutputView {
     }
 
     public static void printGiveaways() {
+        OutputView.printNewLine();
         OutputView.printMessage("<증정 메뉴>");
         OutputView.printMessage("샴페인 n개");
     }
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
-        OutputView.printNewLine();
+        // 가격에 쉼표 붙이기
         if (visitingDate.isWeekend()) {
             printMessage("주말 할인: -" + everyDayDiscountAmount + "원");
         }
@@ -38,7 +39,11 @@ public class OutputView {
             printMessage("평일 할인: -" + everyDayDiscountAmount + "원");
         }
     }
-//        OutputView.printMessage("크리스마스 디데이 할인: -" + everyDayDiscountAmount + "원");
+
+    public static void printDdayDiscountAmount(int dDayDiscountAmount) {
+        printMessage("크리스마스 디데이 할인: -" + dDayDiscountAmount + "원");
+    }
+
 //        OutputView.printMessage("특별 할인: ");
 //        OutputView.printMessage("증정 이벤트: ");
 }
