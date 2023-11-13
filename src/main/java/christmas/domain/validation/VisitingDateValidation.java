@@ -2,7 +2,6 @@ package christmas.domain.validation;
 
 import christmas.utils.Constants;
 import christmas.utils.ErrorMessage;
-import christmas.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,14 +16,14 @@ public class VisitingDateValidation {
     public static boolean isValidDate(String input) {
         boolean isValid = validations.stream().allMatch(validation -> validation.test(input));
         if (!isValid) {
-            System.out.println(OutputView.errorDateMessage());
+            throw new IllegalArgumentException(ErrorMessage.DATE_ERROR_MESSAGE.getMessage());
         }
         return isValid;
     }
 
     public static void validateVisitingDate(int day) {
         if (!isValidDayRange(day)) {
-            throw new IllegalArgumentException(ErrorMessage.VISITING_DATE_OUT_OF_RANGE_ERROR.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DATE_ERROR_MESSAGE.getMessage());
         }
     }
 
