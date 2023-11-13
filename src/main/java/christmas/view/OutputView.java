@@ -24,6 +24,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public static void printGiveaways() {
+        OutputView.printMessage("<증정 메뉴>");
+        OutputView.printMessage("샴페인 n개");
+    }
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
         OutputView.printNewLine();
