@@ -11,7 +11,12 @@ public class DiscountCalculator {
         if (!visitingDate.isWeekend()) {
             everyDayDiscountAmount = order.getDessertCount() * WEEKDAY_DISCOUNT_AMOUNT;
         }
+        totalDiscount = totalDiscount + everyDayDiscountAmount;
         return everyDayDiscountAmount;
+    }
+
+    public static int getTotalDiscount() {
+        return totalDiscount;
     }
 }
 
