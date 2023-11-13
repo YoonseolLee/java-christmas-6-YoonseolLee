@@ -12,7 +12,7 @@ public class VisitingDateValidation {
             input -> input.matches(Constants.REGEX_NUMERIC),
             input -> !input.startsWith("0"),
             VisitingDateValidation::isPositiveInteger,
-            input -> isWithinRange(input, 1, 31)
+            input -> isWithinRange(input, Constants.START_OF_MONTH, Constants.END_OF_MONTH)
     );
 
     public static boolean isValidDate(String input) {

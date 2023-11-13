@@ -1,6 +1,7 @@
 package christmas.domain.validation;
 
 import christmas.domain.MenuBoard;
+import christmas.utils.Constants;
 import christmas.utils.ErrorMessage;
 import java.util.HashSet;
 import java.util.List;
@@ -37,7 +38,7 @@ public class OrderValidation {
                 .allMatch(s -> {
                     String quantity = s.split("-")[1];
                     return quantity.matches("\\d+") && Integer.parseInt(quantity) >= 1
-                            && Integer.parseInt(quantity) <= 20;
+                            && Integer.parseInt(quantity) <= Constants.MAXIMUM_ORDER_QUANTITY;
                 });
     }
 
@@ -74,6 +75,6 @@ public class OrderValidation {
         int menuCount = menuNames.stream()
                 .mapToInt(s -> Integer.parseInt(s.split("-")[1]))
                 .sum();
-        return menuCount <= 20;
+        return menuCount <= Constants.MAXIMUM_ORDER_QUANTITY;
     }
 }
