@@ -22,17 +22,17 @@ public class OrderValidation {
         throw new IllegalArgumentException(ErrorMessage.ORDER_ERROR_MESSAGE.getMessage());
     }
 
-    public static boolean hasValidFormat(List<String> menuNames) {
+    private static boolean hasValidFormat(List<String> menuNames) {
         return menuNames.stream()
                 .allMatch(s -> s.split("-").length == 2);
     }
 
-    public static boolean hasNoExtraSpaces(List<String> menuNames) {
+    private static boolean hasNoExtraSpaces(List<String> menuNames) {
         return menuNames.stream()
                 .noneMatch(s -> s.contains(" "));
     }
 
-    public static boolean hasValidQuantityFormat(List<String> menuNames) {
+    private static boolean hasValidQuantityFormat(List<String> menuNames) {
         return menuNames.stream()
                 .allMatch(s -> {
                     String quantity = s.split("-")[1];
@@ -41,7 +41,7 @@ public class OrderValidation {
                 });
     }
 
-    public static boolean containsOnlyExistingMenus(List<String> menuNames) {
+    private static boolean containsOnlyExistingMenus(List<String> menuNames) {
         return menuNames.stream()
                 .allMatch(s -> {
                     try {
@@ -53,24 +53,24 @@ public class OrderValidation {
                 });
     }
 
-    public static boolean hasValidMenuCount(List<String> menuNames) {
+    private static boolean hasValidMenuCount(List<String> menuNames) {
         return menuNames.stream()
                 .allMatch(s -> Integer.parseInt(s.split("-")[1]) >= 1);
     }
 
-    public static boolean hasNoDuplicateMenus(List<String> menuNames) {
+    private static boolean hasNoDuplicateMenus(List<String> menuNames) {
         List<String> menus = menuNames.stream()
                 .map(s -> s.split("-")[0])
                 .collect(Collectors.toList());
         return new HashSet<>(menus).size() == menus.size();
     }
 
-    public static boolean includesNonBeverageItem(List<String> menuNames) {
+    private static boolean includesNonBeverageItem(List<String> menuNames) {
         return menuNames.stream()
                 .anyMatch(s -> !MenuBoard.valueOf(s.split("-")[0]).getSort().equals("Beverage"));
     }
 
-    public static boolean doesNotExceedMaxMenuCount(List<String> menuNames) {
+    private static boolean doesNotExceedMaxMenuCount(List<String> menuNames) {
         int menuCount = menuNames.stream()
                 .mapToInt(s -> Integer.parseInt(s.split("-")[1]))
                 .sum();
