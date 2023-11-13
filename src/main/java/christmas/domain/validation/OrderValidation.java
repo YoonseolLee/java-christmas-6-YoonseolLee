@@ -10,6 +10,8 @@ public class OrderValidation {
     public static boolean isValidOrder(String input) {
         List<String> menuNames = List.of(input.split(","));
         if (hasValidFormat(menuNames)
+                && hasNoExtraSpaces(menuNames)
+                && hasValidQuantityFormat(menuNames)
                 && containsOnlyExistingMenus(menuNames)
                 && hasValidMenuCount(menuNames)
                 && hasNoDuplicateMenus(menuNames)
@@ -20,10 +22,23 @@ public class OrderValidation {
         throw new IllegalArgumentException(ErrorMessage.ORDER_ERROR_MESSAGE.getMessage());
     }
 
-
     public static boolean hasValidFormat(List<String> menuNames) {
         return menuNames.stream()
                 .allMatch(s -> s.split("-").length == 2);
+    }
+
+    public static boolean hasNoExtraSpaces(List<String> menuNames) {
+        return menuNames.stream()
+                .noneMatch(s -> s.contains(" "));
+    }
+
+    public static boolean hasValidQuantityFormat(List<String> menuNames) {
+        return menuNames.stream()
+                .allMatch(s -> {
+                    String quantity = s.split("-")[1];
+                    return quantity.matches("\\d+") && Integer.parseInt(quantity) >= 1
+                            && Integer.parseInt(quantity) <= 20;
+                });
     }
 
     public static boolean containsOnlyExistingMenus(List<String> menuNames) {
