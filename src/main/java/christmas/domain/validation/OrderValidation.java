@@ -14,8 +14,7 @@ public class OrderValidation {
                 && hasValidMenuCount(menuNames)
                 && hasNoDuplicateMenus(menuNames)
                 && includesNonBeverageItem(menuNames)
-                && doesNotExceedMaxMenuCount(menuNames)
-                && meetsMinimumAmount(menuNames)) {
+                && doesNotExceedMaxMenuCount(menuNames)) {
             return true;
         }
         throw new IllegalArgumentException(ErrorMessage.ORDER_ERROR_MESSAGE.getMessage());
@@ -61,12 +60,5 @@ public class OrderValidation {
                 .mapToInt(s -> Integer.parseInt(s.split("-")[1]))
                 .sum();
         return menuCount <= 20;
-    }
-
-    public static boolean meetsMinimumAmount(List<String> menuNames) {
-        int totalAmount = menuNames.stream()
-                .mapToInt(s -> MenuBoard.valueOf(s.split("-")[0]).getPrice() * Integer.parseInt(s.split("-")[1]))
-                .sum();
-        return totalAmount >= 10000;
     }
 }
