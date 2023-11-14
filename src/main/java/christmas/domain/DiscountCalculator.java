@@ -8,34 +8,16 @@ public class DiscountCalculator {
     public static int giveawayBenefit = 0;
     public static int totalBenefitAmount = 0;
     public static int champagneForGiveaway = 0;
-    private static boolean isGiveawayPriceCalculated = false;
 
     public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
                                            int specialDiscountAmount) {
         totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
     }
 
-    public static int getGiveawayBenefit() {
-        return giveawayBenefit;
-    }
-
-    public static void calculateGiveAwayEvent(Order order) {
+    public void calculateGiveAwayEvent(Order order) {
         if (order.isTotalPriceAboveThreshold() && order.hasValidTotalPriceForEvents()) {
             giveawayBenefit -= Constants.CHAMPAGNE_PRICE;
             champagneForGiveaway++;
-        }
-    }
-
-    public static void printGiveaway() {
-        if (champagneForGiveaway == 0) {
-            OutputView.printNewLine();
-            OutputView.printMessage("<증정 메뉴>");
-            System.out.println("없음");
-            return;
-        }
-
-        if (champagneForGiveaway > 0) {
-            OutputView.printGiveaways(champagneForGiveaway);
         }
     }
 
