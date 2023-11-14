@@ -16,7 +16,7 @@ public class InputView {
         OutputView.printMessage(GameMessage.GREETINGS_MESSAGE.getMessage());
         while (true) {
             try {
-                String input = getUserInput(GameMessage.ASK_VISITING_DATE.getMessage());
+                String input = Util.getUserInput(GameMessage.ASK_VISITING_DATE.getMessage());
                 validateDate(input);
                 int day = Util.convertToInt(input);
                 return new VisitingDate(day);

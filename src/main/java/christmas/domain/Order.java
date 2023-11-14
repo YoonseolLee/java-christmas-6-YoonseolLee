@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.utils.Constants;
 import christmas.view.OutputView;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -60,7 +61,7 @@ public class Order {
     }
 
     public boolean isTotalPriceAboveThreshold() {
-        return totalPriceBeforeDiscount >= PRICE_THRESHOLD;
+        return totalPriceBeforeDiscount >= Constants.PRICE_THRESHOLD_FOR_GIVEAWAY_EVENT;
     }
 
     public int getTotalPriceAfterDiscount(int totalBenefitAmount) {
