@@ -19,6 +19,7 @@ public class MainController {
         VisitingDate visitingDate = receiveVisitingDate();
         // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate);
+
         // 3. 이벤트 대상 등록
         calculator.calculateGiveAwayEvent(order);
         OutputView.printGiveaway();
@@ -44,7 +45,6 @@ public class MainController {
         System.out.println("<12월 이벤트 배지>");
         System.out.println(eventBadge);
     }
-
 
     private VisitingDate receiveVisitingDate() {
         VisitingDate visitingDate = InputView.getVisitingDate();
@@ -73,6 +73,7 @@ public class MainController {
 
         if (totalDiscount == 0) {
             OutputView.printMessage("없음");
+            OutputView.printNewLine();
         }
 
         if (totalDiscount != 0 && calculator.isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount,

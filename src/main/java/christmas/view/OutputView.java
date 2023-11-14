@@ -48,19 +48,10 @@ public class OutputView {
         int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
         int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
         int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
-
-        if (dDayDiscountAmount != 0) {
-            printDdayDiscountAmount(dDayDiscountAmount);
-        }
-        if (everyDayDiscountAmount != 0) {
-            printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
-        }
-        if (specialDiscountAmount != 0) {
-            printSpecialDiscountAmount(specialDiscountAmount);
-        }
-        if (giveawayBenefit != 0) {
-            printGiveawayBenefit(giveawayBenefit);
-        }
+        printDdayDiscountAmount(dDayDiscountAmount);
+        printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
+        printSpecialDiscountAmount(specialDiscountAmount);
+        printGiveawayBenefit(giveawayBenefit);
     }
 
     public static void printDdayDiscountAmount(int dDayDiscountAmount) {

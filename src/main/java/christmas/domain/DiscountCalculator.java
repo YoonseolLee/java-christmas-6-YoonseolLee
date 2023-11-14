@@ -31,7 +31,12 @@ public class DiscountCalculator {
         if (!visitingDate.isWeekend() && order.hasValidTotalPriceForEvents()) {
             discountAmount = order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
         }
-
+        if (!visitingDate.isWeekend() && !order.hasValidTotalPriceForEvents()) {
+            discountAmount += 0;
+        }
+        if (!visitingDate.isWeekend() && !order.hasValidTotalPriceForEvents()) {
+            discountAmount += 0;
+        }
         return discountAmount;
     }
 
