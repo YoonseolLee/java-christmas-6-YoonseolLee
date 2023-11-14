@@ -22,7 +22,7 @@ public class DiscountCalculator {
     private static boolean isGiveawayPriceCalculated = false;
 
     public static void calculateGiveAwayEvent(Order order) {
-        if (order.isTotalPriceAboveThreshold()) {
+        if (order.isTotalPriceAboveThreshold() && order.hasValidTotalPriceForEvents()) {
             giveawayBenefit -= 25000;
             champagneForFree++;
         }
@@ -45,12 +45,12 @@ public class DiscountCalculator {
         OutputView.printGiveawayBenefit(giveawayBenefit);
     }
 
-    public static int calculateDDayDiscount(VisitingDate visitingDate) {
-        return visitingDate.calculateDDayDiscountAmount();
+    public static int calculateDDayDiscount(VisitingDate visitingDate, Order order) {
+        return visitingDate.calculateDDayDiscountAmount(order);
     }
 
     public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
-        if (visitingDate.isWeekend()) {
+        if (visitingDate.isWeekend() && order.hasValidTotalPriceForEvents()) {
             return order.getMainCount() * WEEKEND_DISCOUNT_AMOUNT;
         } else {
             return order.getDessertCount() * WEEKDAY_DISCOUNT_AMOUNT;
@@ -58,8 +58,8 @@ public class DiscountCalculator {
     }
 
 
-    public static int calculateSpeicalDiscount(VisitingDate visitingDate) {
-        return visitingDate.calculateSpecialDiscountAmount();
+    public static int calculateSpeicalDiscount(VisitingDate visitingDate, Order order) {
+        return visitingDate.calculateSpecialDiscountAmount(order);
     }
 
 
@@ -71,8 +71,8 @@ public class DiscountCalculator {
         return totalBenefitAmount;
     }
 
-    public static int calculateDdayDiscountAmount(VisitingDate visitingDate) {
-        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount();
+    public static int calculateDdayDiscountAmount(VisitingDate visitingDate, Order order) {
+        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
         totalDiscount = totalDiscount + dDayDiscountAmount;
         return dDayDiscountAmount;
     }

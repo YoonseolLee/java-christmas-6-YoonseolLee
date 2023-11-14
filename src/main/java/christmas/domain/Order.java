@@ -19,6 +19,10 @@ public class Order {
         this.totalPriceBeforeDiscount = calculateTotalPriceBeforeDiscount();
     }
 
+    public boolean hasValidTotalPriceForEvents() {
+        return totalPriceBeforeDiscount >= 10000;
+    }
+
     private int calculateTotalPriceBeforeDiscount() {
         return orderedMenus.stream()
                 .mapToInt(menu -> menu.getMenuBoard().getPrice() * menu.getQuantity())

@@ -26,8 +26,8 @@ public class VisitingDate {
     }
 
 
-    public int calculateDDayDiscountAmount() {
-        if (!isDdayDiscountPeriod()) {
+    public int calculateDDayDiscountAmount(Order order) {
+        if (!isDdayDiscountPeriod() && !order.hasValidTotalPriceForEvents()) {
             return 0;
         }
         int day = visitingDate.getDayOfMonth();
@@ -39,8 +39,8 @@ public class VisitingDate {
         return day >= 1 && day <= 25;
     }
 
-    public int calculateSpecialDiscountAmount() {
-        if (!isSpecialDiscountDay()) {
+    public int calculateSpecialDiscountAmount(Order order) {
+        if (!isSpecialDiscountDay() && !order.hasValidTotalPriceForEvents()) {
             return 0;
         }
         return -1000;

@@ -62,11 +62,11 @@ public class MainController {
     }
 
     private void printDiscountAmount(VisitingDate visitingDate, Order order, DiscountCalculator calculator) {
-        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount();
+        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
         int everyDayDiscountAmount = calculator.calculateEveryDayDiscount(order, visitingDate);
-        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount();
+        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount(order);
 
-        if (!isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount)) {
+        if (!isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount, order)) {
             System.out.println("없음");
             OutputView.printNewLine();
             return;
@@ -78,8 +78,9 @@ public class MainController {
         DiscountCalculator.printGiveawayBenefit();
     }
 
-    private boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount, int specialDiscountAmount) {
+    private boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount, int specialDiscountAmount,
+                                        Order order) {
         int totalSum = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
-        return totalSum < 0;
+        return totalSum < 0 && order.hasValidTotalPriceForEvents();
     }
 }
