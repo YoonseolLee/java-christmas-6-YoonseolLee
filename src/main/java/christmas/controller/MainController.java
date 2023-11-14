@@ -9,12 +9,13 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 
 public class MainController {
     DiscountCalculator calculator = new DiscountCalculator();
 
     public void start() {
-        // 1. 식당 방문일 등록 (very good. 생성자도 등록됨. 추후 의존성 필요)
+        // 1. 식당 방문일 등록
         VisitingDate visitingDate = receiveVisitingDate();
         // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate);
@@ -22,7 +23,8 @@ public class MainController {
         calculator.calculateGiveAwayEvent(order);
         OutputView.printGiveaway();
         OutputView.printMessage("<혜택 내역>");
-        calculator.calculateDiscountAmount(visitingDate, order);
+        Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
+        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator);
 
         // 총혜택금액
         DiscountCalculator.calculateTotalBenefitAmount();
@@ -43,6 +45,7 @@ public class MainController {
         System.out.println(eventBadge);
     }
 
+
     private VisitingDate receiveVisitingDate() {
         VisitingDate visitingDate = InputView.getVisitingDate();
         return visitingDate;
@@ -58,6 +61,24 @@ public class MainController {
     private Order receiveOrder() {
         Order order = InputView.getOrder();
         return order;
+    }
+
+    public void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
+                                       DiscountCalculator calculator) {
+        int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
+        int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
+        int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
+
+        int totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
+
+        if (totalDiscount == 0) {
+            OutputView.printMessage("없음");
+        }
+
+        if (totalDiscount != 0 && calculator.isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount,
+                specialDiscountAmount, order)) {
+            OutputView.printDiscount(discountAmounts, visitingDate, calculator.getGiveawayBenefit());
+        }
     }
 
     private void printOrderedMenus(VisitingDate visitingDate, List<Menu> orderedMenus) {

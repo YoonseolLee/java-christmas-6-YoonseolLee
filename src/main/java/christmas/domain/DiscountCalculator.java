@@ -1,7 +1,8 @@
 package christmas.domain;
 
 import christmas.utils.Constants;
-import christmas.view.OutputView;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class DiscountCalculator {
@@ -53,22 +54,22 @@ public class DiscountCalculator {
         return dDayDiscountAmount;
     }
 
-    public void calculateDiscountAmount(VisitingDate visitingDate, Order order) {
+    public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
+        Map<String, Integer> discountAmounts = new HashMap<>();
         int dDayDiscountAmount = calculateDDayDiscount(visitingDate, order);
         int everyDayDiscountAmount = calculateEveryDayDiscount(order, visitingDate);
         int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount(order);
-
-        if (!isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount, order)) {
-            OutputView.printMessage("없음");
-            OutputView.printNewLine();
-            return;
-        }
         updateTotalDiscount(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount);
+
+        discountAmounts.put("D-Day Discount Amount", dDayDiscountAmount);
+        discountAmounts.put("Every Day Discount Amount", everyDayDiscountAmount);
+        discountAmounts.put("Special Discount Amount", specialDiscountAmount);
+        return discountAmounts;
     }
 
-    private static boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
-                                               int specialDiscountAmount,
-                                               Order order) {
+    public static boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                              int specialDiscountAmount,
+                                              Order order) {
         return Stream.of(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount)
                 .mapToInt(Integer::intValue)
                 .sum() < 0 && order.hasValidTotalPriceForEvents();
