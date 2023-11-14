@@ -16,7 +16,6 @@ public class MainController {
         Order order = receiveOrder();
         printOrderedMenus(visitingDate, order);
         printTotalPriceBeforeDiscount(order);
-
         DiscountCalculator.calculateGiveAwayEvent(order);
         DiscountCalculator.printGiveaway();
         OutputView.printNewLine();

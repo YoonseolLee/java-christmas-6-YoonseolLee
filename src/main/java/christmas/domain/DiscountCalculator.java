@@ -30,6 +30,8 @@ public class DiscountCalculator {
 
     public static void printGiveaway() {
         if (champagneForFree == 0) {
+            OutputView.printNewLine();
+            OutputView.printMessage("<증정 메뉴>");
             System.out.println("없음");
             return;
         }
