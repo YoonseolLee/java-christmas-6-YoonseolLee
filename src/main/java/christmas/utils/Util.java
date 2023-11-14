@@ -9,6 +9,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Util {
+    public static String getUserInput(String message) {
+        OutputView.printMessage(message);
+        return Console.readLine();
+    }
+
     public static final int convertToInt(String input) {
         return Integer.parseInt(input);
     }
