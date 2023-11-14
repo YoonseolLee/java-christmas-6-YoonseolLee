@@ -25,12 +25,13 @@ public class VisitingDate {
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
     }
 
+
     public int calculateDDayDiscountAmount() {
         if (!isDdayDiscountPeriod()) {
             return 0;
         }
         int day = visitingDate.getDayOfMonth();
-        return 1000 + (day - 1) * 100;
+        return -(1000 + (day - 1) * 100);
     }
 
     public boolean isDdayDiscountPeriod() {
@@ -42,13 +43,11 @@ public class VisitingDate {
         if (!isSpecialDiscountDay()) {
             return 0;
         }
-        return 1000;
+        return -1000;
     }
 
     public boolean isSpecialDiscountDay() {
         DayOfWeek dayOfWeek = visitingDate.getDayOfWeek();
         return dayOfWeek == DayOfWeek.SUNDAY || visitingDate.isEqual(LocalDate.of(2023, 12, 25));
     }
-
-
 }
