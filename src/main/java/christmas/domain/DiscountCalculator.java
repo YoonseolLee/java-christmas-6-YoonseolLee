@@ -8,6 +8,16 @@ public class DiscountCalculator {
     public static int totalDiscount = 0;
     public static int giveawayBenefit = 0;
     public static int totalBenefitAmount = 0;
+
+    public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                           int specialDiscountAmount) {
+        totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
+    }
+
+    public static int getGiveawayBenefit() {
+        return giveawayBenefit;
+    }
+
     public static int champagneForFree = 0;
     private static boolean isGiveawayPriceCalculated = false;
 
@@ -34,27 +44,20 @@ public class DiscountCalculator {
     }
 
     public static int calculateDDayDiscount(VisitingDate visitingDate) {
-        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount();
-        totalDiscount += dDayDiscountAmount;
-        return dDayDiscountAmount;
+        return visitingDate.calculateDDayDiscountAmount();
     }
 
     public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
-        int everyDayDiscountAmount;
         if (visitingDate.isWeekend()) {
-            everyDayDiscountAmount = order.getMainCount() * WEEKEND_DISCOUNT_AMOUNT;
+            return order.getMainCount() * WEEKEND_DISCOUNT_AMOUNT;
         } else {
-            everyDayDiscountAmount = order.getDessertCount() * WEEKDAY_DISCOUNT_AMOUNT;
+            return order.getDessertCount() * WEEKDAY_DISCOUNT_AMOUNT;
         }
-        totalDiscount += everyDayDiscountAmount;
-        return everyDayDiscountAmount;
     }
 
 
     public static int calculateSpeicalDiscount(VisitingDate visitingDate) {
-        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount();
-        totalDiscount += specialDiscountAmount; // 수정된 부분
-        return specialDiscountAmount;
+        return visitingDate.calculateSpecialDiscountAmount();
     }
 
 
