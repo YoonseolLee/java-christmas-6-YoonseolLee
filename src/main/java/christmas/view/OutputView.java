@@ -88,6 +88,12 @@ public class OutputView {
         printNewLine();
     }
 
+    public static void printTotalPriceAfterDiscount(int totalPriceAfterDiscount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        printMessage("<할인 후 예상 결제 금액>");
+        printMessage(formatter.format(totalPriceAfterDiscount) + "원");
+    }
+
     private static String formatCurrency(int amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(amount);

@@ -74,10 +74,4 @@ public class Order {
         }
         return totalPriceAfterDiscount;
     }
-
-    public void printTotalPriceAfterDiscount(int totalPriceAfterDiscount) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        OutputView.printMessage("<할인 후 예상 결제 금액>");
-        OutputView.printMessage(formatter.format(totalPriceAfterDiscount) + "원");
-    }
 }

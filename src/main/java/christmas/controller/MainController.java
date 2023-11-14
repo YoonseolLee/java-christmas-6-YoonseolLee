@@ -1,7 +1,5 @@
 package christmas.controller;
 
-import static christmas.domain.DiscountCalculator.totalBenefitAmount;
-
 import christmas.domain.DiscountCalculator;
 import christmas.domain.EventBadge;
 import christmas.domain.Menu;
@@ -25,13 +23,10 @@ public class MainController {
         // 4. 할인 적용
         applyDiscounts(calculator, visitingDate, order);
         // 5. 총혜택금액 적용
-        applyTotalBenefitAmount();
-
+        int totalBenefitAmount = applyTotalBenefitAmount();
         // 6. 할인 후 예상 결제 금액
-        int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
-        order.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
-
-        // 12월 이벤트 배지
+        applyTotalPriceAfterDiscount(totalBenefitAmount, order);
+        // 7. 12월 이벤트 배지
         String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
         OutputView.printNewLine();
         System.out.println("<12월 이벤트 배지>");
@@ -86,10 +81,16 @@ public class MainController {
         }
     }
 
-    public void applyTotalBenefitAmount() {
+    public int applyTotalBenefitAmount() {
         DiscountCalculator.calculateTotalBenefitAmount();
         int totalBenefitAmount = DiscountCalculator.getTotalBenefitAmount();
         OutputView.printTotalBenefitAmount(totalBenefitAmount);
+        return totalBenefitAmount;
+    }
+
+    public void applyTotalPriceAfterDiscount(int totalBenefitAmount, Order order) {
+        int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
+        OutputView.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
     }
 
 
