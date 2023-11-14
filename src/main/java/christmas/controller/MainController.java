@@ -11,20 +11,18 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class MainController {
-    DiscountCalculator calculator;
+    DiscountCalculator calculator = new DiscountCalculator();
 
     public void start() {
         // 1. 식당 방문일 등록 (very good. 생성자도 등록됨. 추후 의존성 필요)
         VisitingDate visitingDate = receiveVisitingDate();
         // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate);
-        // 3.
-        DiscountCalculator.calculateGiveAwayEvent(order);
-        DiscountCalculator.printGiveaway();
-        OutputView.printNewLine();
+        // 3. 이벤트 대상 등록
+        calculator.calculateGiveAwayEvent(order);
+        OutputView.printGiveaway();
         OutputView.printMessage("<혜택 내역>");
-
-        printDiscountAmount(visitingDate, order, calculator);
+        calculator.calculateDiscountAmount(visitingDate, order);
 
         // 총혜택금액
         DiscountCalculator.calculateTotalBenefitAmount();
@@ -69,28 +67,5 @@ public class MainController {
 
     private void printTotalPriceBeforeDiscount(Order order) {
         order.printTotalPriceBeforeDiscount();
-    }
-
-    private void printDiscountAmount(VisitingDate visitingDate, Order order, DiscountCalculator calculator) {
-        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
-        int everyDayDiscountAmount = calculator.calculateEveryDayDiscount(order, visitingDate);
-        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount(order);
-
-        if (!isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount, order)) {
-            System.out.println("없음");
-            OutputView.printNewLine();
-            return;
-        }
-        DiscountCalculator.updateTotalDiscount(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount);
-        OutputView.printDdayDiscountAmount(dDayDiscountAmount);
-        OutputView.printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
-        OutputView.printSpecialDiscountAmount(specialDiscountAmount);
-        DiscountCalculator.printGiveawayBenefit();
-    }
-
-    private boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount, int specialDiscountAmount,
-                                        Order order) {
-        int totalSum = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
-        return totalSum < 0 && order.hasValidTotalPriceForEvents();
     }
 }

@@ -2,6 +2,7 @@ package christmas.domain;
 
 import christmas.utils.Constants;
 import christmas.view.OutputView;
+import java.util.stream.Stream;
 
 public class DiscountCalculator {
     public static int totalDiscount = 0;
@@ -9,20 +10,11 @@ public class DiscountCalculator {
     public static int totalBenefitAmount = 0;
     public static int champagneForGiveaway = 0;
 
-    public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
-                                           int specialDiscountAmount) {
-        totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
-    }
-
     public void calculateGiveAwayEvent(Order order) {
         if (order.isTotalPriceAboveThreshold() && order.hasValidTotalPriceForEvents()) {
             giveawayBenefit -= Constants.CHAMPAGNE_PRICE;
             champagneForGiveaway++;
         }
-    }
-
-    public static void printGiveawayBenefit() {
-        OutputView.printGiveawayBenefit(giveawayBenefit);
     }
 
     public static int calculateDDayDiscount(VisitingDate visitingDate, Order order) {
@@ -59,6 +51,32 @@ public class DiscountCalculator {
         int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
         totalDiscount = totalDiscount + dDayDiscountAmount;
         return dDayDiscountAmount;
+    }
+
+    public void calculateDiscountAmount(VisitingDate visitingDate, Order order) {
+        int dDayDiscountAmount = calculateDDayDiscount(visitingDate, order);
+        int everyDayDiscountAmount = calculateEveryDayDiscount(order, visitingDate);
+        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount(order);
+
+        if (!isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount, order)) {
+            OutputView.printMessage("없음");
+            OutputView.printNewLine();
+            return;
+        }
+        updateTotalDiscount(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount);
+    }
+
+    private static boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                               int specialDiscountAmount,
+                                               Order order) {
+        return Stream.of(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount)
+                .mapToInt(Integer::intValue)
+                .sum() < 0 && order.hasValidTotalPriceForEvents();
+    }
+
+    public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                           int specialDiscountAmount) {
+        totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
     }
 
     public static int getChampagneForGiveaway() {
