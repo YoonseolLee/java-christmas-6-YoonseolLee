@@ -19,7 +19,14 @@ public class DiscountCalculator {
     }
 
     public static void printGiveaway() {
-        OutputView.printGiveaways(champagneForFree);
+        if (champagneForFree == 0) {
+            System.out.println("없음");
+            return;
+        }
+
+        if (champagneForFree > 0) {
+            OutputView.printGiveaways(champagneForFree);
+        }
     }
 
     public static void printGiveawayBenefit() {
