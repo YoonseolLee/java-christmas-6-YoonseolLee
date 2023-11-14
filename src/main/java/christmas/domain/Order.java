@@ -29,11 +29,8 @@ public class Order {
                 .sum();
     }
 
-    public void printOrderedMenus() {
-        OutputView.printMessage("<주문 메뉴>");
-        orderedMenus.forEach(menu ->
-                OutputView.printMessage(menu.getMenuBoard().toString() + " " + menu.getQuantity() + "개"));
-        OutputView.printNewLine();
+    public List<Menu> getOrderedMenus() {
+        return orderedMenus;
     }
 
     public void printTotalPriceBeforeDiscount() {

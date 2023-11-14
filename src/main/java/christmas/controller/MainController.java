@@ -16,9 +16,9 @@ public class MainController {
     public void start() {
         // 1. 식당 방문일 등록 (very good. 생성자도 등록됨. 추후 의존성 필요)
         VisitingDate visitingDate = receiveVisitingDate();
-        Order order = receiveOrder();
-        printOrderedMenus(visitingDate, order);
-        printTotalPriceBeforeDiscount(order);
+        // 2. 주문메뉴와 개수 등록
+        Order order = generateOrderDetails(visitingDate);
+        // 3.
         DiscountCalculator.calculateGiveAwayEvent(order);
         DiscountCalculator.printGiveaway();
         OutputView.printNewLine();
@@ -50,14 +50,21 @@ public class MainController {
         return visitingDate;
     }
 
+    private Order generateOrderDetails(VisitingDate visitingDate) {
+        Order order = receiveOrder();
+        printOrderedMenus(visitingDate, order.getOrderedMenus());
+        printTotalPriceBeforeDiscount(order);
+        return order;
+    }
+
     private Order receiveOrder() {
         Order order = InputView.getOrder();
         return order;
     }
 
-    private void printOrderedMenus(VisitingDate visitingDate, Order order) {
-        visitingDate.printEventPreview();
-        order.printOrderedMenus();
+    private void printOrderedMenus(VisitingDate visitingDate, List<Menu> orderedMenus) {
+        OutputView.printEventPreview(visitingDate);
+        OutputView.printOrderedMenus(orderedMenus);
     }
 
     private void printTotalPriceBeforeDiscount(Order order) {
