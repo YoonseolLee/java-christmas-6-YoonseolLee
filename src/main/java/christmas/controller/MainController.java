@@ -2,16 +2,19 @@ package christmas.controller;
 
 import christmas.domain.DiscountCalculator;
 import christmas.domain.EventBadge;
+import christmas.domain.Menu;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class MainController {
     DiscountCalculator calculator;
 
     public void start() {
+        // 1. 식당 방문일 등록 (very good. 생성자도 등록됨. 추후 의존성 필요)
         VisitingDate visitingDate = receiveVisitingDate();
         Order order = receiveOrder();
         printOrderedMenus(visitingDate, order);
