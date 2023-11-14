@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.domain.VisitingDate;
 import christmas.utils.GameMessage;
+import java.text.DecimalFormat;
 
 public class OutputView {
     public static void printGreetings() {
@@ -24,32 +25,46 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printGiveaways() {
+    public static void printGiveaways(int champagneCount) {
         OutputView.printNewLine();
         OutputView.printMessage("<증정 메뉴>");
-        OutputView.printMessage("샴페인 n개");
+        System.out.printf("샴페인 %d개%n", champagneCount);
+    }
+
+    public static void printGiveawayBenefit(int giveawayBenefit) {
+        System.out.printf("증정 이벤트: %d원%n", giveawayBenefit);
+        OutputView.printNewLine();
     }
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
-        // 가격에 쉼표 붙이기
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedDiscount = formatter.format(everyDayDiscountAmount) + "원";
+
         if (visitingDate.isWeekend()) {
-            printMessage("주말 할인: -" + everyDayDiscountAmount + "원");
+            System.out.printf("주말 할인: %s%n", formattedDiscount);
         }
         if (!visitingDate.isWeekend()) {
-            printMessage("평일 할인: -" + everyDayDiscountAmount + "원");
+            System.out.printf("평일 할인: %s%n", formattedDiscount);
         }
     }
 
     public static void printDdayDiscountAmount(int dDayDiscountAmount) {
-        printMessage("크리스마스 디데이 할인: -" + dDayDiscountAmount + "원");
+        System.out.printf("크리스마스 디데이 할인: %s원%n", formatCurrency(dDayDiscountAmount));
     }
 
     public static void printSpecialDiscountAmount(int specialDiscountAmount) {
-        printMessage("특별 할인: -" + specialDiscountAmount + "원");
+        System.out.printf("특별 할인: %s원%n", formatCurrency(specialDiscountAmount));
     }
 
-//        OutputView.printMessage("특별 할인: ");
-//        OutputView.printMessage("증정 이벤트: ");
+    public static void printTotalBenefitAmount(int totalBenefitAmount) {
+        OutputView.printNewLine();
+        System.out.printf("<총 혜택 금액>%n%s원%n", formatCurrency(totalBenefitAmount));
+    }
+
+    private static String formatCurrency(int amount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(amount);
+    }
 }
 
 
