@@ -8,6 +8,7 @@ public class Order {
     private final List<String> menuNames;
     private final List<Menu> orderedMenus;
     private final int totalPriceBeforeDiscount;
+    private static final int PRICE_THRESHOLD = 120000;
 
 //    [해산물파스타-2, 레드와인-1, 초코케이크-1]
 //    [Menu{menuBoard=해산물파스타, quantity=2}, Menu{menuBoard=레드와인, quantity=1}, Menu{menuBoard=초코케이크, quantity=1}]
@@ -37,6 +38,7 @@ public class Order {
         OutputView.printMessage(formatter.format(totalPriceBeforeDiscount) + "원");
     }
 
+
     public int getDessertCount() {
         int dessertCount = 0;
         for (Menu menu : orderedMenus) {
@@ -57,4 +59,24 @@ public class Order {
         return mainCount;
     }
 
+    public boolean isTotalPriceAboveThreshold() {
+        return totalPriceBeforeDiscount >= PRICE_THRESHOLD;
+    }
+
+    public int getTotalPriceAfterDiscount(int totalBenefitAmount) {
+        int totalPriceAfterDiscount = 0;
+        if (isTotalPriceAboveThreshold()) {
+            totalPriceAfterDiscount = totalPriceBeforeDiscount - (-totalBenefitAmount) + (25_000);
+        }
+        if (!isTotalPriceAboveThreshold()) {
+            totalPriceAfterDiscount = totalPriceBeforeDiscount - (-totalBenefitAmount);
+        }
+        return totalPriceAfterDiscount;
+    }
+
+    public void printTotalPriceAfterDiscount(int totalPriceAfterDiscount) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        OutputView.printMessage("<할인 후 예상 결제 금액>");
+        OutputView.printMessage(formatter.format(totalPriceAfterDiscount) + "원");
+    }
 }
