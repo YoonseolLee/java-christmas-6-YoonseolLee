@@ -81,10 +81,11 @@ public class OutputView {
         OutputView.printNewLine();
     }
 
-    ///////////////// 일단 여기까지
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
-        OutputView.printNewLine();
-        printFormattedMessage("<총 혜택 금액>%n%s원%n", formatCurrency(totalBenefitAmount));
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        printMessage("<총혜택 금액>");
+        printMessage(formatter.format(totalBenefitAmount) + "원");
+        printNewLine();
     }
 
     private static String formatCurrency(int amount) {

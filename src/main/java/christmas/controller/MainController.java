@@ -1,5 +1,7 @@
 package christmas.controller;
 
+import static christmas.domain.DiscountCalculator.totalBenefitAmount;
+
 import christmas.domain.DiscountCalculator;
 import christmas.domain.EventBadge;
 import christmas.domain.Menu;
@@ -7,7 +9,6 @@ import christmas.domain.Order;
 import christmas.domain.VisitingDate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -19,23 +20,14 @@ public class MainController {
         VisitingDate visitingDate = receiveVisitingDate();
         // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate);
+        // 3. 증정이벤트 적용
+        applyGiveawayEvent(calculator, order);
+        // 4. 할인 적용
+        applyDiscounts(calculator, visitingDate, order);
+        // 5. 총혜택금액 적용
+        applyTotalBenefitAmount();
 
-        // 3. 이벤트 대상 등록
-        calculator.calculateGiveAwayEvent(order);
-        OutputView.printGiveaway();
-        OutputView.printMessage("<혜택 내역>");
-        Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
-        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator);
-
-        // 총혜택금액
-        DiscountCalculator.calculateTotalBenefitAmount();
-        int totalBenefitAmount = DiscountCalculator.getTotalBenefitAmount();
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        System.out.println("<총혜택 금액>");
-        System.out.println(formatter.format(totalBenefitAmount) + "원");
-        System.out.println();
-
-        // 할인 후 예상 결제 금액
+        // 6. 할인 후 예상 결제 금액
         int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
         order.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
 
@@ -63,6 +55,18 @@ public class MainController {
         return order;
     }
 
+    public void applyGiveawayEvent(DiscountCalculator calculator, Order order) {
+        calculator.calculateGiveAwayEvent(order);
+        OutputView.printGiveaway();
+    }
+
+    public void applyDiscounts(DiscountCalculator calculator, VisitingDate visitingDate, Order order) {
+        OutputView.printMessage("<혜택 내역>");
+        Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
+        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator);
+    }
+
+
     public void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
                                        DiscountCalculator calculator) {
         int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
@@ -81,6 +85,13 @@ public class MainController {
             OutputView.printDiscount(discountAmounts, visitingDate, calculator.getGiveawayBenefit());
         }
     }
+
+    public void applyTotalBenefitAmount() {
+        DiscountCalculator.calculateTotalBenefitAmount();
+        int totalBenefitAmount = DiscountCalculator.getTotalBenefitAmount();
+        OutputView.printTotalBenefitAmount(totalBenefitAmount);
+    }
+
 
     private void printOrderedMenus(VisitingDate visitingDate, List<Menu> orderedMenus) {
         OutputView.printEventPreview(visitingDate);
