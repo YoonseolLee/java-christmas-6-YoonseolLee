@@ -1,5 +1,7 @@
 package christmas.controller;
 
+import static christmas.domain.DiscountCalculator.totalBenefitAmount;
+
 import christmas.domain.DiscountCalculator;
 import christmas.domain.EventBadge;
 import christmas.domain.Menu;
@@ -27,10 +29,7 @@ public class MainController {
         // 6. 할인 후 예상 결제 금액
         applyTotalPriceAfterDiscount(totalBenefitAmount, order);
         // 7. 12월 이벤트 배지
-        String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
-        OutputView.printNewLine();
-        System.out.println("<12월 이벤트 배지>");
-        System.out.println(eventBadge);
+        applyEventBadge();
     }
 
     private VisitingDate receiveVisitingDate() {
@@ -91,6 +90,11 @@ public class MainController {
     public void applyTotalPriceAfterDiscount(int totalBenefitAmount, Order order) {
         int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
         OutputView.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
+    }
+
+    public void applyEventBadge() {
+        String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
+        OutputView.printEventBadge(eventBadge);
     }
 
 

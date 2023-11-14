@@ -94,6 +94,12 @@ public class OutputView {
         printMessage(formatter.format(totalPriceAfterDiscount) + "원");
     }
 
+    public static void printEventBadge(String eventBadge) {
+        printNewLine();
+        printMessage("<12월 이벤트 배지>");
+        printMessage(eventBadge);
+    }
+
     private static String formatCurrency(int amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(amount);
