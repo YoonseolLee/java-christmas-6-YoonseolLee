@@ -60,5 +60,13 @@ public class DiscountCalculator {
         totalDiscount = totalDiscount + dDayDiscountAmount;
         return dDayDiscountAmount;
     }
+
+    public static int getChampagneForGiveaway() {
+        return champagneForGiveaway;
+    }
+
+    public static int getGiveawayBenefit() {
+        return giveawayBenefit;
+    }
 }
 

@@ -1,8 +1,10 @@
 package christmas.view;
 
+import christmas.domain.DiscountCalculator;
+import christmas.domain.Menu;
 import christmas.domain.VisitingDate;
-import christmas.utils.GameMessage;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class OutputView {
     public static void printEventPreview(VisitingDate visitingDate) {
@@ -17,26 +19,27 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printMessage(String message) {
-        System.out.println(message);
+    public static void printGiveaway() {
+        int champagneForGiveaway = DiscountCalculator.getChampagneForGiveaway();
+
+        if (champagneForGiveaway == 0) {
+            printNewLine();
+            printMessage("<증정 메뉴>");
+            System.out.println("없음");
+            OutputView.printNewLine();
+            return;
+        }
+
+        if (champagneForGiveaway > 0) {
+            printGiveaways(champagneForGiveaway);
+            OutputView.printNewLine();
+        }
     }
 
-    public static void printMessageWithoutNewLine(String message) {
-        System.out.print(message);
-    }
-
-    public static void printException(Exception exception) {
-        printMessage(exception.getMessage());
-    }
-
-    public static void printNewLine() {
-        System.out.println();
-    }
-
-    public static void printGiveaways(int champagneCount) {
-        OutputView.printNewLine();
-        OutputView.printMessage("<증정 메뉴>");
-        System.out.printf("샴페인 %d개%n", champagneCount);
+    public static void printGiveaways(int champagneForGiveaway) {
+        printNewLine();
+        printMessage("<증정 메뉴>");
+        printFormattedMessage("샴페인 %d개%n", champagneForGiveaway);
     }
 
     public static void printGiveawayBenefit(int giveawayBenefit) {
@@ -45,7 +48,6 @@ public class OutputView {
         System.out.printf("증정 이벤트: %s원%n", formattedBenefit);
         OutputView.printNewLine();
     }
-
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
         DecimalFormat formatter = new DecimalFormat("#,###");
@@ -75,6 +77,27 @@ public class OutputView {
     private static String formatCurrency(int amount) {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(amount);
+    }
+
+    public static void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    public static void printFormattedMessage(String format, Object... args) {
+        System.out.printf(format, args);
+    }
+
+
+    public static void printMessageWithoutNewLine(String message) {
+        System.out.print(message);
+    }
+
+    public static void printException(Exception exception) {
+        printMessage(exception.getMessage());
+    }
+
+    public static void printNewLine() {
+        System.out.println();
     }
 }
 
