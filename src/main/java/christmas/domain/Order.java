@@ -8,7 +8,6 @@ public class Order {
     private final List<String> menuNames;
     private final List<Menu> orderedMenus;
     private final int totalPriceBeforeDiscount;
-    private static final int PRICE_THRESHOLD = 120000;
 
 //    [해산물파스타-2, 레드와인-1, 초코케이크-1]
 //    [Menu{menuBoard=해산물파스타, quantity=2}, Menu{menuBoard=레드와인, quantity=1}, Menu{menuBoard=초코케이크, quantity=1}]

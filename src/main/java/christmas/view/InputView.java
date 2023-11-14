@@ -26,11 +26,6 @@ public class InputView {
         }
     }
 
-    private static String getUserInput(String message) {
-        OutputView.printMessage(message);
-        return Console.readLine();
-    }
-
     private static void validateDate(String input) {
         if (!VisitingDateValidation.isValidDate(input)) {
             throw new IllegalArgumentException(ErrorMessage.DATE_ERROR_MESSAGE.getMessage());
