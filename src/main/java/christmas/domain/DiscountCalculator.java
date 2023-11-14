@@ -1,10 +1,9 @@
 package christmas.domain;
 
+import christmas.utils.Constants;
 import christmas.view.OutputView;
 
 public class DiscountCalculator {
-    private static final int WEEKEND_DISCOUNT_AMOUNT = -2023;
-    private static final int WEEKDAY_DISCOUNT_AMOUNT = -2023;
     public static int totalDiscount = 0;
     public static int giveawayBenefit = 0;
     public static int totalBenefitAmount = 0;
@@ -50,11 +49,16 @@ public class DiscountCalculator {
     }
 
     public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
+        int discountAmount = 0;
+
         if (visitingDate.isWeekend() && order.hasValidTotalPriceForEvents()) {
-            return order.getMainCount() * WEEKEND_DISCOUNT_AMOUNT;
-        } else {
-            return order.getDessertCount() * WEEKDAY_DISCOUNT_AMOUNT;
+            discountAmount = order.getMainCount() * Constants.WEEKEND_DISCOUNT_AMOUNT;
         }
+        if (!visitingDate.isWeekend() && !order.hasValidTotalPriceForEvents()) {
+            discountAmount = order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
+        }
+
+        return discountAmount;
     }
 
 
