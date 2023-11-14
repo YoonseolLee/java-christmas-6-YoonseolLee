@@ -5,6 +5,7 @@ import christmas.domain.Menu;
 import christmas.domain.VisitingDate;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public static void printEventPreview(VisitingDate visitingDate) {
@@ -42,11 +43,24 @@ public class OutputView {
         printFormattedMessage("샴페인 %d개%n", champagneForGiveaway);
     }
 
-    public static void printDiscount(int discountAmount, String discountType) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        String formattedDiscount = formatter.format(discountAmount) + "원";
-        printFormattedMessage("%s: %s%n", discountType, formattedDiscount);
-        OutputView.printNewLine();
+    public static void printDiscount(Map<String, Integer> discountAmounts, VisitingDate visitingDate,
+                                     int giveawayBenefit) {
+        int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
+        int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
+        int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
+
+        if (dDayDiscountAmount != 0) {
+            printDdayDiscountAmount(dDayDiscountAmount);
+        }
+        if (everyDayDiscountAmount != 0) {
+            printEveryDayDiscountAmount(everyDayDiscountAmount, visitingDate);
+        }
+        if (specialDiscountAmount != 0) {
+            printSpecialDiscountAmount(specialDiscountAmount);
+        }
+        if (giveawayBenefit != 0) {
+            printGiveawayBenefit(giveawayBenefit);
+        }
     }
 
     public static void printDdayDiscountAmount(int dDayDiscountAmount) {
@@ -76,6 +90,7 @@ public class OutputView {
         OutputView.printNewLine();
     }
 
+    ///////////////// 일단 여기까지
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
         OutputView.printNewLine();
         printFormattedMessage("<총 혜택 금액>%n%s원%n", formatCurrency(totalBenefitAmount));
