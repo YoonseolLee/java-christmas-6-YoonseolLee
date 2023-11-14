@@ -31,10 +31,18 @@ public class OutputView {
         System.out.printf("샴페인 %d개%n", champagneCount);
     }
 
+//    public static void printGiveawayBenefit(int giveawayBenefit) {
+//        System.out.printf("증정 이벤트: %d원%n", giveawayBenefit);
+//        OutputView.printNewLine();
+//    }
+
     public static void printGiveawayBenefit(int giveawayBenefit) {
-        System.out.printf("증정 이벤트: %d원%n", giveawayBenefit);
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedBenefit = formatter.format(giveawayBenefit);
+        System.out.printf("증정 이벤트: %s원%n", formattedBenefit);
         OutputView.printNewLine();
     }
+
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
         DecimalFormat formatter = new DecimalFormat("#,###");
