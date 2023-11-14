@@ -7,6 +7,8 @@ public class DiscountCalculator {
     public static int totalDiscount = 0;
     public static int giveawayBenefit = 0;
     public static int totalBenefitAmount = 0;
+    public static int champagneForGiveaway = 0;
+    private static boolean isGiveawayPriceCalculated = false;
 
     public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
                                            int specialDiscountAmount) {
@@ -17,26 +19,23 @@ public class DiscountCalculator {
         return giveawayBenefit;
     }
 
-    public static int champagneForFree = 0;
-    private static boolean isGiveawayPriceCalculated = false;
-
     public static void calculateGiveAwayEvent(Order order) {
         if (order.isTotalPriceAboveThreshold() && order.hasValidTotalPriceForEvents()) {
-            giveawayBenefit -= 25000;
-            champagneForFree++;
+            giveawayBenefit -= Constants.CHAMPAGNE_PRICE;
+            champagneForGiveaway++;
         }
     }
 
     public static void printGiveaway() {
-        if (champagneForFree == 0) {
+        if (champagneForGiveaway == 0) {
             OutputView.printNewLine();
             OutputView.printMessage("<증정 메뉴>");
             System.out.println("없음");
             return;
         }
 
-        if (champagneForFree > 0) {
-            OutputView.printGiveaways(champagneForFree);
+        if (champagneForGiveaway > 0) {
+            OutputView.printGiveaways(champagneForGiveaway);
         }
     }
 
@@ -65,7 +64,6 @@ public class DiscountCalculator {
     public static int calculateSpeicalDiscount(VisitingDate visitingDate, Order order) {
         return visitingDate.calculateSpecialDiscountAmount(order);
     }
-
 
     public static void calculateTotalBenefitAmount() {
         totalBenefitAmount = totalDiscount + giveawayBenefit;
