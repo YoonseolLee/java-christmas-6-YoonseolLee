@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.DiscountCalculator;
+import christmas.domain.EventBadge;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
 import christmas.view.InputView;
@@ -15,6 +16,7 @@ public class MainController {
         Order order = receiveOrder();
         printOrderedMenus(visitingDate, order);
         printTotalPriceBeforeDiscount(order);
+
         DiscountCalculator.calculateGiveAwayEvent(order);
         DiscountCalculator.printGiveaway();
 
@@ -46,6 +48,12 @@ public class MainController {
         // 할인 후 예상 결제 금액
         int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
         order.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
+
+        // 12월 이벤트 배지
+        String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
+        OutputView.printNewLine();
+        System.out.println("<12월 이벤트 배지>");
+        System.out.println(eventBadge);
     }
 
     private VisitingDate receiveVisitingDate() {
