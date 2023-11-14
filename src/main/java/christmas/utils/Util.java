@@ -1,7 +1,9 @@
 package christmas.utils;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.Menu;
 import christmas.domain.MenuBoard;
+import christmas.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;

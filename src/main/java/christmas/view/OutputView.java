@@ -5,8 +5,16 @@ import christmas.utils.GameMessage;
 import java.text.DecimalFormat;
 
 public class OutputView {
-    public static void printGreetings() {
-        printMessage(GameMessage.GREETINGS_MESSAGE.getMessage());
+    public static void printEventPreview(VisitingDate visitingDate) {
+        printMessage("12월 " + visitingDate.getDayOfMonth() + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        printNewLine();
+    }
+
+    public static void printOrderedMenus(List<Menu> orderedMenus) {
+        printMessage("<주문 메뉴>");
+        orderedMenus.forEach(menu ->
+                printMessage(menu.getMenuBoard().toString() + " " + menu.getQuantity() + "개"));
+        printNewLine();
     }
 
     public static void printMessage(String message) {
