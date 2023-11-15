@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.event;
 
 public enum EventBadge {
     STAR(5000, "별"),

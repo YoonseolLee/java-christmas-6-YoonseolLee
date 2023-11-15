@@ -1,5 +1,6 @@
-package christmas.domain;
+package christmas.domain.date;
 
+import christmas.domain.order.Order;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 

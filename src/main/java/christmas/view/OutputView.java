@@ -1,8 +1,8 @@
 package christmas.view;
 
-import christmas.domain.DiscountCalculator;
-import christmas.domain.Menu;
-import christmas.domain.VisitingDate;
+import christmas.domain.date.VisitingDate;
+import christmas.domain.event.DiscountCalculator;
+import christmas.domain.order.Menu;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;

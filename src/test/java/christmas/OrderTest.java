@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuBoard;
-import christmas.domain.Order;
+import christmas.domain.order.Menu;
+import christmas.domain.order.MenuBoard;
+import christmas.domain.order.Order;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

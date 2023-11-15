@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.order;
 
 public enum MenuBoard {
     양송이수프("Appetizer", 6_000), 타파스("Appetizer", 5_500), 시저샐러드("Appetizer", 8_000),

@@ -1,9 +1,9 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.domain.Menu;
-import christmas.domain.Order;
-import christmas.domain.VisitingDate;
+import christmas.domain.date.VisitingDate;
+import christmas.domain.order.Menu;
+import christmas.domain.order.Order;
 import christmas.domain.validation.OrderValidation;
 import christmas.domain.validation.VisitingDateValidation;
 import christmas.utils.ErrorMessage;

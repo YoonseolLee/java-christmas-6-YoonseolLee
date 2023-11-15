@@ -1,6 +1,6 @@
 package christmas.domain.validation;
 
-import christmas.domain.MenuBoard;
+import christmas.domain.order.MenuBoard;
 import christmas.utils.Constants;
 import christmas.utils.ErrorMessage;
 import java.util.HashSet;

@@ -1,12 +1,12 @@
 package christmas.controller;
 
-import static christmas.domain.DiscountCalculator.totalBenefitAmount;
+import static christmas.domain.event.DiscountCalculator.totalBenefitAmount;
 
-import christmas.domain.DiscountCalculator;
-import christmas.domain.EventBadge;
-import christmas.domain.Menu;
-import christmas.domain.Order;
-import christmas.domain.VisitingDate;
+import christmas.domain.date.VisitingDate;
+import christmas.domain.event.DiscountCalculator;
+import christmas.domain.event.EventBadge;
+import christmas.domain.order.Menu;
+import christmas.domain.order.Order;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
