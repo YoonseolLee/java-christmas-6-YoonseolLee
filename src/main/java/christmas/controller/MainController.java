@@ -21,19 +21,12 @@ public class MainController {
     OrderValidation orderValidation = new OrderValidation();
 
     public void start() {
-        // 1. 식당 방문일 등록
         VisitingDate visitingDate = receiveVisitingDate();
-        // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate, orderValidation);
-        // 3. 증정이벤트 적용
         applyGiveawayEvent(eventApplier, order);
-        // 4. 할인 적용
         applyDiscounts(discountCalculator, visitingDate, order, eventApplier);
-        // 5. 총혜택금액 적용
         int totalBenefitAmount = applyTotalBenefitAmount(totalBenefitAmountCalculator, discountCalculator);
-        // 6. 할인 후 예상 결제 금액
         applyTotalPriceAfterDiscount(totalBenefitAmount, order);
-        // 7. 12월 이벤트 배지
         GrantedEventBadge badge = applyEventBadge(totalBenefitAmount);
     }
 
@@ -82,7 +75,7 @@ public class MainController {
 
         if (totalDiscount != 0 && calculator.isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount,
                 specialDiscountAmount, order)) {
-            OutputView.printDiscount(discountAmounts, visitingDate, eventApplier.getGiveawayBenefit());
+            OutputView.printDiscount(discountAmounts, visitingDate, eventApplier.getGiveawayBenefit().getValue());
         }
     }
 

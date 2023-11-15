@@ -4,21 +4,26 @@ import christmas.domain.order.Order;
 import christmas.utils.Constants;
 
 public class EventApplier {
-    private int giveawayBenefit = 0;
-    private int champagneForGiveaway = 0;
+    private Benefit giveawayBenefit;
+    private ChampagneCount champagneForGiveaway;
+
+    public EventApplier() {
+        this.giveawayBenefit = new Benefit(0);
+        this.champagneForGiveaway = new ChampagneCount(0);
+    }
 
     public void calculateGiveAwayEvent(Order order) {
         if (order.isTotalPriceAboveThreshold() && order.hasValidTotalPriceForEvents()) {
-            giveawayBenefit -= Constants.CHAMPAGNE_PRICE;
-            champagneForGiveaway++;
+            giveawayBenefit = giveawayBenefit.subtract(Constants.CHAMPAGNE_PRICE);
+            champagneForGiveaway = champagneForGiveaway.increment();
         }
     }
 
-    public int getGiveawayBenefit() {
+    public Benefit getGiveawayBenefit() {
         return giveawayBenefit;
     }
 
-    public int getChampagneForGiveaway() {
+    public ChampagneCount getChampagneForGiveaway() {
         return champagneForGiveaway;
     }
 }

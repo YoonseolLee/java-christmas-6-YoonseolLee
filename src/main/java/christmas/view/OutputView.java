@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     public static void printGiveaway(EventApplier eventApplier) {
-        int champagneForGiveaway = eventApplier.getChampagneForGiveaway();
+        int champagneForGiveaway = eventApplier.getChampagneForGiveaway().getCount();
 
         if (champagneForGiveaway == 0) {
             printNewLine();
