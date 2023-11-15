@@ -3,7 +3,7 @@ package christmas.controller;
 import christmas.domain.date.VisitingDate;
 import christmas.domain.event.DiscountCalculator;
 import christmas.domain.event.EventApplier;
-import christmas.domain.event.EventBadge;
+import christmas.domain.event.GrantedEventBadge;
 import christmas.domain.event.TotalBenefitAmountCalculator;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
@@ -32,7 +32,7 @@ public class MainController {
         // 6. 할인 후 예상 결제 금액
         applyTotalPriceAfterDiscount(totalBenefitAmount, order);
         // 7. 12월 이벤트 배지
-        applyEventBadge(totalBenefitAmount);
+        GrantedEventBadge badge = applyEventBadge(totalBenefitAmount);
     }
 
     private VisitingDate receiveVisitingDate() {
@@ -97,9 +97,10 @@ public class MainController {
         OutputView.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
     }
 
-    private void applyEventBadge(int totalBenefitAmount) {
-        String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
-        OutputView.printEventBadge(eventBadge);
+    private GrantedEventBadge applyEventBadge(int totalBenefitAmount) {
+        GrantedEventBadge grantedEventBadge = GrantedEventBadge.of(totalBenefitAmount);
+        OutputView.printEventBadge(grantedEventBadge.getBadge());
+        return grantedEventBadge;
     }
 
 
