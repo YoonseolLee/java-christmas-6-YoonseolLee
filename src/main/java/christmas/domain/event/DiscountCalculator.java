@@ -7,7 +7,11 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class DiscountCalculator {
-    private int totalDiscount = 0;
+    private Discount totalDiscount;
+
+    public DiscountCalculator() {
+        this.totalDiscount = new Discount(0);
+    }
 
     public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
         int dDayDiscountAmount = calculateDDayDiscountAmount(visitingDate, order);
@@ -31,10 +35,10 @@ public class DiscountCalculator {
 
     public void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
                                     int specialDiscountAmount) {
-        totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
+        totalDiscount = new Discount(dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount);
     }
 
-    public int getTotalDiscount() {
+    public Discount getTotalDiscount() {
         return totalDiscount;
     }
 
