@@ -74,4 +74,12 @@ public class Order {
         }
         return totalPriceAfterDiscount;
     }
+
+    public List<String> getMenuNames() {
+        return menuNames;
+    }
+
+    public int getTotalPriceBeforeDiscount() {
+        return totalPriceBeforeDiscount;
+    }
 }
