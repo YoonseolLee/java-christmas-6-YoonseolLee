@@ -17,22 +17,13 @@ public class DiscountCalculator {
         return -(1000 + (day - 1) * 100);
     }
 
-    public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
-        int discountAmount = 0;
-
-        if (visitingDate.isWeekend() && order.hasValidTotalPriceForEvents()) {
-            discountAmount = order.getMainCount() * Constants.WEEKEND_DISCOUNT_AMOUNT;
+    public int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
+        if (order.hasValidTotalPriceForEvents()) {
+            return visitingDate.isWeekend()
+                    ? order.getMainCount() * Constants.WEEKEND_DISCOUNT_AMOUNT
+                    : order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
         }
-        if (!visitingDate.isWeekend() && order.hasValidTotalPriceForEvents()) {
-            discountAmount = order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
-        }
-        if (!visitingDate.isWeekend() && !order.hasValidTotalPriceForEvents()) {
-            discountAmount += 0;
-        }
-        if (!visitingDate.isWeekend() && !order.hasValidTotalPriceForEvents()) {
-            discountAmount += 0;
-        }
-        return discountAmount;
+        return 0;
     }
 
     public int calculateSpecialDiscountAmount(VisitingDate visitingDate, Order order) {
@@ -55,16 +46,16 @@ public class DiscountCalculator {
         );
     }
 
-    public static boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
-                                              int specialDiscountAmount,
-                                              Order order) {
+    public boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                       int specialDiscountAmount,
+                                       Order order) {
         return Stream.of(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount)
                 .mapToInt(Integer::intValue)
                 .sum() < 0 && order.hasValidTotalPriceForEvents();
     }
 
-    public static void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
-                                           int specialDiscountAmount) {
+    public void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
+                                    int specialDiscountAmount) {
         totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
     }
 }
