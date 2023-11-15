@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainController {
-    DiscountCalculator calculator = new DiscountCalculator();
+    DiscountCalculator discountCalculator = new DiscountCalculator();
     EventApplier eventApplier = new EventApplier();
     TotalBenefitAmountCalculator totalBenefitAmountCalculator = new TotalBenefitAmountCalculator();
 
@@ -25,9 +25,9 @@ public class MainController {
         // 3. 증정이벤트 적용
         applyGiveawayEvent(eventApplier, order);
         // 4. 할인 적용
-        applyDiscounts(calculator, visitingDate, order, eventApplier);
+        applyDiscounts(discountCalculator, visitingDate, order, eventApplier);
         // 5. 총혜택금액 적용
-        int totalBenefitAmount = applyTotalBenefitAmount(totalBenefitAmountCalculator, calculator);
+        int totalBenefitAmount = applyTotalBenefitAmount(totalBenefitAmountCalculator, discountCalculator);
         // 6. 할인 후 예상 결제 금액
         applyTotalPriceAfterDiscount(totalBenefitAmount, order);
         // 7. 12월 이벤트 배지
