@@ -16,10 +16,18 @@ import java.util.List;
 import java.util.Map;
 
 public class MainController {
-    DiscountCalculator discountCalculator = new DiscountCalculator();
-    EventApplier eventApplier = new EventApplier();
-    TotalBenefitAmountCalculator totalBenefitAmountCalculator = new TotalBenefitAmountCalculator();
-    OrderValidation orderValidation = new OrderValidation();
+    private DiscountCalculator discountCalculator;
+    private EventApplier eventApplier;
+    private TotalBenefitAmountCalculator totalBenefitAmountCalculator;
+    private OrderValidation orderValidation;
+
+    public MainController(DiscountCalculator discountCalculator, EventApplier eventApplier,
+                          TotalBenefitAmountCalculator totalBenefitAmountCalculator, OrderValidation orderValidation) {
+        this.discountCalculator = discountCalculator;
+        this.eventApplier = eventApplier;
+        this.totalBenefitAmountCalculator = totalBenefitAmountCalculator;
+        this.orderValidation = orderValidation;
+    }
 
     public void start() {
         VisitingDate visitingDate = receiveVisitingDate();
