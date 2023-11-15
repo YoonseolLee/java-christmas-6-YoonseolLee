@@ -1,11 +1,10 @@
 package christmas.controller;
 
-import static christmas.domain.event.DiscountCalculator.totalBenefitAmount;
-
 import christmas.domain.date.VisitingDate;
 import christmas.domain.event.DiscountCalculator;
 import christmas.domain.event.EventApplier;
 import christmas.domain.event.EventBadge;
+import christmas.domain.event.TotalBenefitAmountCalculator;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
 import christmas.view.InputView;
@@ -16,6 +15,7 @@ import java.util.Map;
 public class MainController {
     DiscountCalculator calculator = new DiscountCalculator();
     EventApplier eventApplier = new EventApplier();
+    TotalBenefitAmountCalculator totalBenefitAmountCalculator = new TotalBenefitAmountCalculator();
 
     public void start() {
         // 1. 식당 방문일 등록
@@ -27,11 +27,11 @@ public class MainController {
         // 4. 할인 적용
         applyDiscounts(calculator, visitingDate, order, eventApplier);
         // 5. 총혜택금액 적용
-        int totalBenefitAmount = applyTotalBenefitAmount();
+        int totalBenefitAmount = applyTotalBenefitAmount(totalBenefitAmountCalculator, calculator);
         // 6. 할인 후 예상 결제 금액
         applyTotalPriceAfterDiscount(totalBenefitAmount, order);
         // 7. 12월 이벤트 배지
-        applyEventBadge();
+        applyEventBadge(totalBenefitAmount);
     }
 
     private VisitingDate receiveVisitingDate() {
@@ -83,9 +83,10 @@ public class MainController {
         }
     }
 
-    public int applyTotalBenefitAmount() {
-        DiscountCalculator.calculateTotalBenefitAmount(eventApplier);
-        int totalBenefitAmount = DiscountCalculator.getTotalBenefitAmount();
+    public int applyTotalBenefitAmount(TotalBenefitAmountCalculator totalBenefitAmountCalculator,
+                                       DiscountCalculator discountCalculator) {
+        totalBenefitAmountCalculator.calculateTotalBenefitAmount(discountCalculator, eventApplier);
+        int totalBenefitAmount = totalBenefitAmountCalculator.getTotalBenefitAmount();
         OutputView.printTotalBenefitAmount(totalBenefitAmount);
         return totalBenefitAmount;
     }
@@ -95,7 +96,7 @@ public class MainController {
         OutputView.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
     }
 
-    public void applyEventBadge() {
+    public void applyEventBadge(int totalBenefitAmount) {
         String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
         OutputView.printEventBadge(eventBadge);
     }

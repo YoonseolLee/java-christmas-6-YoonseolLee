@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 public class DiscountCalculator {
     public static int totalDiscount = 0;
-    public static int totalBenefitAmount = 0;
 
     public static int calculateDDayDiscount(VisitingDate visitingDate, Order order) {
         return visitingDate.calculateDDayDiscountAmount(order);
@@ -38,13 +37,6 @@ public class DiscountCalculator {
         return visitingDate.calculateSpecialDiscountAmount(order);
     }
 
-    public static void calculateTotalBenefitAmount(EventApplier eventApplier) {
-        totalBenefitAmount = totalDiscount + eventApplier.getGiveawayBenefit();
-    }
-
-    public static int getTotalBenefitAmount() {
-        return totalBenefitAmount;
-    }
 
     public static int calculateDdayDiscountAmount(VisitingDate visitingDate, Order order) {
         int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
