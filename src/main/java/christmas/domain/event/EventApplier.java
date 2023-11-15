@@ -4,11 +4,11 @@ import christmas.domain.order.Order;
 import christmas.utils.Constants;
 
 public class EventApplier {
-    private Benefit giveawayBenefit;
+    private GiveAwayBenefit giveawayBenefit;
     private ChampagneCount champagneForGiveaway;
 
     public EventApplier() {
-        this.giveawayBenefit = new Benefit(0);
+        this.giveawayBenefit = new GiveAwayBenefit(0);
         this.champagneForGiveaway = new ChampagneCount(0);
     }
 
@@ -19,7 +19,7 @@ public class EventApplier {
         }
     }
 
-    public Benefit getGiveawayBenefit() {
+    public GiveAwayBenefit getGiveawayBenefit() {
         return giveawayBenefit;
     }
 
