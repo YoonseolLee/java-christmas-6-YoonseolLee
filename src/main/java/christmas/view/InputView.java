@@ -6,6 +6,7 @@ import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
 import christmas.domain.validation.OrderValidation;
 import christmas.domain.validation.VisitingDateValidation;
+import christmas.utils.Constants;
 import christmas.utils.ErrorMessage;
 import christmas.utils.GameMessage;
 import christmas.utils.Util;
@@ -58,7 +59,7 @@ public class InputView {
             return Console.readLine();
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
-            return "";
+            return Constants.EMPTY_STRING;
         }
     }
 }
