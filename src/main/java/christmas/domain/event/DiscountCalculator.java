@@ -3,7 +3,6 @@ package christmas.domain.event;
 import christmas.domain.date.VisitingDate;
 import christmas.domain.order.Order;
 import christmas.utils.Constants;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -44,16 +43,16 @@ public class DiscountCalculator {
     }
 
     public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
-        Map<String, Integer> discountAmounts = new HashMap<>();
         int dDayDiscountAmount = calculateDDayDiscountAmount(visitingDate, order);
         int everyDayDiscountAmount = calculateEveryDayDiscount(order, visitingDate);
         int specialDiscountAmount = calculateSpecialDiscountAmount(visitingDate, order);
         updateTotalDiscount(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount);
 
-        discountAmounts.put("D-Day Discount Amount", dDayDiscountAmount);
-        discountAmounts.put("Every Day Discount Amount", everyDayDiscountAmount);
-        discountAmounts.put("Special Discount Amount", specialDiscountAmount);
-        return discountAmounts;
+        return Map.of(
+                "D-Day Discount Amount", dDayDiscountAmount,
+                "Every Day Discount Amount", everyDayDiscountAmount,
+                "Special Discount Amount", specialDiscountAmount
+        );
     }
 
     public static boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
