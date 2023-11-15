@@ -82,7 +82,7 @@ public class MainController {
     private int applyTotalBenefitAmount(TotalBenefitAmountCalculator totalBenefitAmountCalculator,
                                         DiscountCalculator discountCalculator) {
         totalBenefitAmountCalculator.calculateTotalBenefitAmount(discountCalculator, eventApplier);
-        int totalBenefitAmount = totalBenefitAmountCalculator.getTotalBenefitAmount();
+        int totalBenefitAmount = totalBenefitAmountCalculator.getTotalBenefit().getValue();
         OutputView.printTotalBenefitAmount(totalBenefitAmount);
         return totalBenefitAmount;
     }

@@ -1,14 +1,19 @@
 package christmas.domain.event;
 
 public class TotalBenefitAmountCalculator {
-    private int totalBenefitAmount = 0;
+    private TotalBenefit totalBenefit;
 
-    public void calculateTotalBenefitAmount(DiscountCalculator discountCalculator, EventApplier eventApplier) {
-        totalBenefitAmount =
-                discountCalculator.getTotalDiscount().getValue() + eventApplier.getGiveawayBenefit().getValue();
+    public TotalBenefitAmountCalculator() {
+        this.totalBenefit = new TotalBenefit(0);
     }
 
-    public int getTotalBenefitAmount() {
-        return totalBenefitAmount;
+    public void calculateTotalBenefitAmount(DiscountCalculator discountCalculator, EventApplier eventApplier) {
+        totalBenefit =
+                new TotalBenefit(discountCalculator.getTotalDiscount().getValue() + eventApplier.getGiveawayBenefit()
+                        .getValue());
+    }
+
+    public TotalBenefit getTotalBenefit() {
+        return totalBenefit;
     }
 }
