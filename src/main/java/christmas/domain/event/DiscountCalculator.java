@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class DiscountCalculator {
-    public static int totalDiscount = 0;
+    public int totalDiscount = 0;
 
     public int calculateDDayDiscountAmount(VisitingDate visitingDate, Order order) {
         if (!visitingDate.isDdayDiscountPeriod() || !order.hasValidTotalPriceForEvents()) {

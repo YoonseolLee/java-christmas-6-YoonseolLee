@@ -18,10 +18,10 @@ public class Menu {
     }
 
     public boolean isDessert() {
-        return menuBoard.getSort().equals("Dessert");
+        return menuBoard.getSort().equals(MenuSort.DESSERT);
     }
 
     public boolean isMain() {
-        return menuBoard.getSort().equals("Main");
+        return menuBoard.getSort().equals(MenuSort.MAIN);
     }
 }
