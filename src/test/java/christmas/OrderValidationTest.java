@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class OrderValidationTest {
+    OrderValidation orderValidation = new OrderValidation();
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -18,7 +19,7 @@ class OrderValidationTest {
     })
     @DisplayName("isValidOrder 테스트_정상적인 경우")
     void 정상적인_주문이면_정상_실행(String validOrder) {
-        Assertions.assertTrue(OrderValidation.isValidOrder(validOrder));
+        Assertions.assertTrue(orderValidation.isValidOrder(validOrder));
     }
 
     @ParameterizedTest
@@ -30,7 +31,7 @@ class OrderValidationTest {
     @DisplayName("hasValidQuantityFormat 테스트")
     void 주문포맷이_유효하지_않은_경우_예외_발생(String invalidFormatOrder) {
         // When, Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> OrderValidation.isValidOrder(invalidFormatOrder));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> orderValidation.isValidOrder(invalidFormatOrder));
     }
 
     @ParameterizedTest
@@ -43,7 +44,7 @@ class OrderValidationTest {
     @DisplayName("hasNoExtraSpaces 테스트")
     void 메뉴에_공백이_있는_경우_예외_발생(String orderWithExtraSpaces) {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> OrderValidation.isValidOrder(orderWithExtraSpaces));
+                () -> orderValidation.isValidOrder(orderWithExtraSpaces));
     }
 
     @Test
@@ -53,7 +54,7 @@ class OrderValidationTest {
         String emptyMenuList = "";
 
         // When, Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> OrderValidation.isValidOrder(emptyMenuList));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> orderValidation.isValidOrder(emptyMenuList));
     }
 
     @Test
@@ -64,7 +65,7 @@ class OrderValidationTest {
 
         // When, Then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> OrderValidation.isValidOrder(invalidQuantityFormatOrder));
+                () -> orderValidation.isValidOrder(invalidQuantityFormatOrder));
     }
 
     @Test
@@ -74,7 +75,7 @@ class OrderValidationTest {
         String zeroQuantityOrder = "양송이수프-2,타파스-0,레드와인-3";
 
         // When, Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> OrderValidation.isValidOrder(zeroQuantityOrder));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> orderValidation.isValidOrder(zeroQuantityOrder));
     }
 
     @Test
@@ -85,7 +86,7 @@ class OrderValidationTest {
 
         // When, Then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> OrderValidation.isValidOrder(nonExistingMenuOrder));
+                () -> orderValidation.isValidOrder(nonExistingMenuOrder));
     }
 
     @Test
@@ -96,7 +97,7 @@ class OrderValidationTest {
 
         // When, Then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> OrderValidation.isValidOrder(duplicateMenusOrder));
+                () -> orderValidation.isValidOrder(duplicateMenusOrder));
     }
 
     @Test
@@ -107,7 +108,7 @@ class OrderValidationTest {
 
         // When, Then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> OrderValidation.isValidOrder(exceedingMaxMenuCountOrder));
+                () -> orderValidation.isValidOrder(exceedingMaxMenuCountOrder));
     }
 
     @Test
@@ -117,6 +118,6 @@ class OrderValidationTest {
         String AllDrinksMenuOrder = "샴페인-1,레드와인-3,제로콜라-15";
 
         // When, Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> OrderValidation.isValidOrder(AllDrinksMenuOrder));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> orderValidation.isValidOrder(AllDrinksMenuOrder));
     }
 }

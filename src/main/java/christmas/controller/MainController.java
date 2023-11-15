@@ -7,6 +7,7 @@ import christmas.domain.event.GrantedEventBadge;
 import christmas.domain.event.TotalBenefitAmountCalculator;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
+import christmas.domain.validation.OrderValidation;
 import christmas.utils.GameMessage;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -17,12 +18,13 @@ public class MainController {
     DiscountCalculator discountCalculator = new DiscountCalculator();
     EventApplier eventApplier = new EventApplier();
     TotalBenefitAmountCalculator totalBenefitAmountCalculator = new TotalBenefitAmountCalculator();
+    OrderValidation orderValidation = new OrderValidation();
 
     public void start() {
         // 1. 식당 방문일 등록
         VisitingDate visitingDate = receiveVisitingDate();
         // 2. 주문메뉴와 개수 등록
-        Order order = generateOrderDetails(visitingDate);
+        Order order = generateOrderDetails(visitingDate, orderValidation);
         // 3. 증정이벤트 적용
         applyGiveawayEvent(eventApplier, order);
         // 4. 할인 적용
@@ -40,15 +42,15 @@ public class MainController {
         return visitingDate;
     }
 
-    private Order generateOrderDetails(VisitingDate visitingDate) {
-        Order order = receiveOrder();
+    private Order generateOrderDetails(VisitingDate visitingDate, OrderValidation orderValidation) {
+        Order order = receiveOrder(orderValidation);
         printOrderedMenus(visitingDate, order.getOrderedMenus());
         printTotalPriceBeforeDiscount(order);
         return order;
     }
 
-    private Order receiveOrder() {
-        Order order = InputView.getOrder();
+    private Order receiveOrder(OrderValidation orderValidation) {
+        Order order = InputView.getOrder(orderValidation);
         return order;
     }
 

@@ -33,10 +33,10 @@ public class InputView {
         }
     }
 
-    public static Order getOrder() {
+    public static Order getOrder(OrderValidation orderValidation) {
         while (true) {
             try {
-                List<String> menuNames = getMenuNames();
+                List<String> menuNames = getMenuNames(orderValidation);
                 List<Menu> orderedMenus = Util.getOrderedMenus(menuNames);
                 return new Order(menuNames, orderedMenus);
             } catch (IllegalArgumentException e) {
@@ -45,11 +45,11 @@ public class InputView {
         }
     }
 
-    public static List<String> getMenuNames() {
+    public static List<String> getMenuNames(OrderValidation orderValidation) {
         String orderInput;
         do {
             orderInput = receiveOrderInput();
-        } while (!OrderValidation.isValidOrder(orderInput));
+        } while (!orderValidation.isValidOrder(orderInput));
         return Util.convertInputToMenuNames(orderInput);
     }
 

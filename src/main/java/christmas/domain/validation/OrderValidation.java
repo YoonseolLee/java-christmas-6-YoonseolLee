@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderValidation {
-    public static boolean isValidOrder(String input) {
+    public boolean isValidOrder(String input) {
         List<String> menuNames = List.of(input.split(","));
         if (hasValidFormat(menuNames)
                 && hasNoExtraSpaces(menuNames)
