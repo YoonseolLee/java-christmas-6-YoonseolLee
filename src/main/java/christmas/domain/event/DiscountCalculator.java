@@ -10,8 +10,12 @@ import java.util.stream.Stream;
 public class DiscountCalculator {
     public static int totalDiscount = 0;
 
-    public static int calculateDDayDiscount(VisitingDate visitingDate, Order order) {
-        return visitingDate.calculateDDayDiscountAmount(order);
+    public int calculateDDayDiscountAmount(VisitingDate visitingDate, Order order) {
+        if (!visitingDate.isDdayDiscountPeriod() || !order.hasValidTotalPriceForEvents()) {
+            return 0;
+        }
+        int day = visitingDate.getDayOfMonth();
+        return -(1000 + (day - 1) * 100);
     }
 
     public static int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
@@ -32,23 +36,18 @@ public class DiscountCalculator {
         return discountAmount;
     }
 
-
-    public static int calculateSpeicalDiscount(VisitingDate visitingDate, Order order) {
-        return visitingDate.calculateSpecialDiscountAmount(order);
-    }
-
-
-    public static int calculateDdayDiscountAmount(VisitingDate visitingDate, Order order) {
-        int dDayDiscountAmount = visitingDate.calculateDDayDiscountAmount(order);
-        totalDiscount = totalDiscount + dDayDiscountAmount;
-        return dDayDiscountAmount;
+    public int calculateSpecialDiscountAmount(VisitingDate visitingDate, Order order) {
+        if (!visitingDate.isSpecialDiscountDay() || !order.hasValidTotalPriceForEvents()) {
+            return 0;
+        }
+        return -1000;
     }
 
     public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
         Map<String, Integer> discountAmounts = new HashMap<>();
-        int dDayDiscountAmount = calculateDDayDiscount(visitingDate, order);
+        int dDayDiscountAmount = calculateDDayDiscountAmount(visitingDate, order);
         int everyDayDiscountAmount = calculateEveryDayDiscount(order, visitingDate);
-        int specialDiscountAmount = visitingDate.calculateSpecialDiscountAmount(order);
+        int specialDiscountAmount = calculateSpecialDiscountAmount(visitingDate, order);
         updateTotalDiscount(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount);
 
         discountAmounts.put("D-Day Discount Amount", dDayDiscountAmount);
