@@ -10,21 +10,21 @@ import java.util.Map;
 
 public class OutputView {
     public static void printEventPreview(VisitingDate visitingDate) {
-        printMessage("12월 " + visitingDate.getDayOfMonth() + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        printFormattedMessage("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n", visitingDate.getDayOfMonth());
         printNewLine();
     }
 
     public static void printOrderedMenus(List<Menu> orderedMenus) {
         printMessage("<주문 메뉴>");
         orderedMenus.forEach(menu ->
-                printMessage(menu.getMenuBoard().toString() + " " + menu.getQuantity() + "개"));
+                printFormattedMessage("%s %d개%n", menu.getMenuBoard(), menu.getQuantity()));
         printNewLine();
     }
 
     public static void printTotalPriceBeforeDiscount(Order order) {
         DecimalFormat formatter = new DecimalFormat("#,###");
-        OutputView.printMessage("<할인 전 총주문 금액>");
-        OutputView.printMessage(formatter.format(order.getTotalPriceBeforeDiscount()) + "원");
+        printMessage("<할인 전 총주문 금액>");
+        printMessage(formatter.format(order.getTotalPriceBeforeDiscount()) + "원");
     }
 
     public static void printGiveaway(EventApplier eventApplier) {
@@ -34,13 +34,13 @@ public class OutputView {
             printNewLine();
             printMessage("<증정 메뉴>");
             System.out.println("없음");
-            OutputView.printNewLine();
+            printNewLine();
             return;
         }
 
         if (champagneForGiveaway > 0) {
             printGiveaways(champagneForGiveaway);
-            OutputView.printNewLine();
+            printNewLine();
         }
     }
 
@@ -85,7 +85,7 @@ public class OutputView {
         DecimalFormat formatter = new DecimalFormat("#,###");
         String formattedBenefit = formatter.format(giveawayBenefit);
         printFormattedMessage("증정 이벤트: %s원%n", formattedBenefit);
-        OutputView.printNewLine();
+        printNewLine();
     }
 
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
@@ -120,18 +120,7 @@ public class OutputView {
         System.out.printf(format, args);
     }
 
-
-    public static void printMessageWithoutNewLine(String message) {
-        System.out.print(message);
-    }
-
-    public static void printException(Exception exception) {
-        printMessage(exception.getMessage());
-    }
-
     public static void printNewLine() {
         System.out.println();
     }
 }
-
-
