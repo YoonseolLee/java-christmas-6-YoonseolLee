@@ -11,6 +11,7 @@ import christmas.domain.validation.OrderValidation;
 import christmas.utils.GameMessage;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -56,25 +57,37 @@ public class MainController {
                                 EventApplier eventApplier) {
         OutputView.printMessage(GameMessage.BENEFIT_DETAILS.getMessage());
         Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
-        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator, eventApplier);
+        printDiscountOrNoDiscountMessage(discountAmounts, visitingDate, order, calculator, eventApplier);
     }
 
-
-    private void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
-                                        DiscountCalculator calculator, EventApplier eventApplier) {
-        int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
-        int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
-        int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
-
-        int totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
-
+    private void printDiscountOrNoDiscountMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate,
+                                                  Order order,
+                                                  DiscountCalculator calculator, EventApplier eventApplier) {
+        int totalDiscount = calculateTotalDiscount(discountAmounts);
         if (totalDiscount == 0) {
-            OutputView.printMessage(GameMessage.NONE_MESSAGE.getMessage());
-            OutputView.printNewLine();
+            printNoDiscountMessage();
+            return;
         }
+        printDiscountIfEligible(discountAmounts, visitingDate, order, calculator, eventApplier);
+    }
 
-        if (totalDiscount != 0 && calculator.isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount,
-                specialDiscountAmount, order)) {
+    private int calculateTotalDiscount(Map<String, Integer> discountAmounts) {
+        return discountAmounts.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private void printNoDiscountMessage() {
+        OutputView.printMessage(GameMessage.NONE_MESSAGE.getMessage());
+        OutputView.printNewLine();
+    }
+
+    private void printDiscountIfEligible(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
+                                         DiscountCalculator calculator, EventApplier eventApplier) {
+        List<Integer> discountList = Arrays.asList(
+                discountAmounts.getOrDefault("D-Day Discount Amount", 0),
+                discountAmounts.getOrDefault("Every Day Discount Amount", 0),
+                discountAmounts.getOrDefault("Special Discount Amount", 0)
+        );
+        if (calculator.isEligibleForEvents(discountList.get(0), discountList.get(1), discountList.get(2), order)) {
             OutputView.printDiscount(discountAmounts, visitingDate, eventApplier.getGiveawayBenefit().getValue());
         }
     }
