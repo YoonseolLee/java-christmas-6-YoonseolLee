@@ -16,5 +16,3 @@ public class GrantedEventBadge {
         return this.badge;
     }
 }
-
-
