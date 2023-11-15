@@ -5,7 +5,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class VisitingDate {
-
     private LocalDate visitingDate;
 
     public VisitingDate(int day) {

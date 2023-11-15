@@ -7,31 +7,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class DiscountCalculator {
-    public int totalDiscount = 0;
-
-    public int calculateDDayDiscountAmount(VisitingDate visitingDate, Order order) {
-        if (!visitingDate.isDdayDiscountPeriod() || !order.hasValidTotalPriceForEvents()) {
-            return 0;
-        }
-        int day = visitingDate.getDayOfMonth();
-        return -(1000 + (day - 1) * 100);
-    }
-
-    public int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
-        if (order.hasValidTotalPriceForEvents()) {
-            return visitingDate.isWeekend()
-                    ? order.getMainCount() * Constants.WEEKEND_DISCOUNT_AMOUNT
-                    : order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
-        }
-        return 0;
-    }
-
-    public int calculateSpecialDiscountAmount(VisitingDate visitingDate, Order order) {
-        if (!visitingDate.isSpecialDiscountDay() || !order.hasValidTotalPriceForEvents()) {
-            return 0;
-        }
-        return Constants.SPEICAL_DISCOUNT_AMOUNT;
-    }
+    private int totalDiscount = 0;
 
     public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
         int dDayDiscountAmount = calculateDDayDiscountAmount(visitingDate, order);
@@ -47,8 +23,7 @@ public class DiscountCalculator {
     }
 
     public boolean isEligibleForEvents(int dDayDiscountAmount, int everyDayDiscountAmount,
-                                       int specialDiscountAmount,
-                                       Order order) {
+                                       int specialDiscountAmount, Order order) {
         return Stream.of(dDayDiscountAmount, everyDayDiscountAmount, specialDiscountAmount)
                 .mapToInt(Integer::intValue)
                 .sum() < 0 && order.hasValidTotalPriceForEvents();
@@ -57,6 +32,34 @@ public class DiscountCalculator {
     public void updateTotalDiscount(int dDayDiscountAmount, int everyDayDiscountAmount,
                                     int specialDiscountAmount) {
         totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
+    }
+
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    private int calculateDDayDiscountAmount(VisitingDate visitingDate, Order order) {
+        if (!visitingDate.isDdayDiscountPeriod() || !order.hasValidTotalPriceForEvents()) {
+            return 0;
+        }
+        int day = visitingDate.getDayOfMonth();
+        return -(1000 + (day - 1) * 100);
+    }
+
+    private int calculateEveryDayDiscount(Order order, VisitingDate visitingDate) {
+        if (order.hasValidTotalPriceForEvents()) {
+            return visitingDate.isWeekend()
+                    ? order.getMainCount() * Constants.WEEKEND_DISCOUNT_AMOUNT
+                    : order.getDessertCount() * Constants.WEEKDAY_DISCOUNT_AMOUNT;
+        }
+        return 0;
+    }
+
+    private int calculateSpecialDiscountAmount(VisitingDate visitingDate, Order order) {
+        if (!visitingDate.isSpecialDiscountDay() || !order.hasValidTotalPriceForEvents()) {
+            return 0;
+        }
+        return Constants.SPECIAL_DISCOUNT_AMOUNT;
     }
 }
 
