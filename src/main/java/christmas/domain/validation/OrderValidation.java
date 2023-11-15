@@ -68,7 +68,7 @@ public class OrderValidation {
 
     private static boolean includesNonBeverageItem(List<String> menuNames) {
         return menuNames.stream()
-                .anyMatch(s -> !MenuBoard.valueOf(s.split("-")[0]).getSort().equals("Beverage"));
+                .anyMatch(s -> !MenuBoard.valueOf(s.split("-")[0]).getSort().equals(MenuSort.BEVERAGE));
     }
 
     private static boolean doesNotExceedMaxMenuCount(List<String> menuNames) {
