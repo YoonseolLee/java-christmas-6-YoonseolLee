@@ -1,5 +1,7 @@
 package christmas.domain.event;
 
+import christmas.domain.event.wrapped.ChampagneCount;
+import christmas.domain.event.wrapped.GiveAwayBenefit;
 import christmas.domain.order.Order;
 import christmas.utils.Constants;
 

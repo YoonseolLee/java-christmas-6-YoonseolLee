@@ -1,9 +1,9 @@
-package christmas.domain.event;
+package christmas.domain.event.wrapped;
 
-public class Discount {
+public class TotalBenefit {
     private final int value;
 
-    public Discount(int value) {
+    public TotalBenefit(int value) {
         this.value = value;
     }
 

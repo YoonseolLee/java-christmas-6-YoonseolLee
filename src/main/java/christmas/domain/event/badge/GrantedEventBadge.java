@@ -1,4 +1,4 @@
-package christmas.domain.event;
+package christmas.domain.event.badge;
 
 public class GrantedEventBadge {
     private final String badge;

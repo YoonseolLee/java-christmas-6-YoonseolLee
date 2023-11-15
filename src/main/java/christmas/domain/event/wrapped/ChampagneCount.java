@@ -1,4 +1,4 @@
-package christmas.domain.event;
+package christmas.domain.event.wrapped;
 
 public class ChampagneCount {
     private final int count;

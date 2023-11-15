@@ -1,5 +1,7 @@
 package christmas.domain.event;
 
+import christmas.domain.event.wrapped.TotalBenefit;
+
 public class TotalBenefitAmountCalculator {
     private TotalBenefit totalBenefit;
 
