@@ -1,53 +1,27 @@
 package christmas;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.MenuBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class MenuBoardTest {
+    @DisplayName("getSort() 테스트")
     @Test
-    @DisplayName("getSort() 유효성 테스트")
-    public void 이름과_sort가_서로_일치하면_정상_실행() {
-        // Given
-        MenuBoard appetizer = MenuBoard.양송이수프;
-        MenuBoard main = MenuBoard.티본스테이크;
-        MenuBoard dessert = MenuBoard.초코케이크;
-        MenuBoard beverage = MenuBoard.제로콜라;
-
-        // When
-        String appetizerSort = appetizer.getSort();
-        String mainSort = main.getSort();
-        String dessertSort = dessert.getSort();
-        String beverageSort = beverage.getSort();
-
-        // Then
-        assertEquals("Appetizer", appetizerSort);
-        assertEquals("Main", mainSort);
-        assertEquals("Dessert", dessertSort);
-        assertEquals("Beverage", beverageSort);
+    public void 메뉴에_해당하는_sort를_가져오면_정상실행() {
+        assertThat(MenuBoard.시저샐러드.getSort()).isEqualTo("Appetizer");
+        assertThat(MenuBoard.바비큐립.getSort()).isEqualTo("Main");
+        assertThat(MenuBoard.초코케이크.getSort()).isEqualTo("Dessert");
+        assertThat(MenuBoard.샴페인.getSort()).isEqualTo("Beverage");
     }
 
+    @DisplayName("getPrice() 테스트")
     @Test
-    @DisplayName("getPrice() 유효성 테스트")
-    public void 이름과_price가_서로_일치하면_정상_실행() {
-        // Given
-        MenuBoard soup = MenuBoard.양송이수프;
-        MenuBoard steak = MenuBoard.티본스테이크;
-        MenuBoard cake = MenuBoard.초코케이크;
-        MenuBoard cola = MenuBoard.제로콜라;
-
-        // When
-        int soupPrice = soup.getPrice();
-        int steakPrice = steak.getPrice();
-        int cakePrice = cake.getPrice();
-        int colaPrice = cola.getPrice();
-
-        // Then
-        assertEquals(6_000, soupPrice);
-        assertEquals(55_000, steakPrice);
-        assertEquals(15_000, cakePrice);
-        assertEquals(3_000, colaPrice);
+    public void 메뉴에_해당하는_price를_가져오면_정상실행() {
+        assertThat(MenuBoard.시저샐러드.getPrice()).isEqualTo(8000);
+        assertThat(MenuBoard.바비큐립.getPrice()).isEqualTo(54000);
+        assertThat(MenuBoard.초코케이크.getPrice()).isEqualTo(15000);
+        assertThat(MenuBoard.샴페인.getPrice()).isEqualTo(25000);
     }
 }
