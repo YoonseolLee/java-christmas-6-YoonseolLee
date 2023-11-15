@@ -1,7 +1,7 @@
 package christmas.view;
 
 import christmas.domain.date.VisitingDate;
-import christmas.domain.event.DiscountCalculator;
+import christmas.domain.event.EventApplier;
 import christmas.domain.order.Menu;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -20,8 +20,8 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printGiveaway() {
-        int champagneForGiveaway = DiscountCalculator.getChampagneForGiveaway();
+    public static void printGiveaway(EventApplier eventApplier) {
+        int champagneForGiveaway = eventApplier.getChampagneForGiveaway();
 
         if (champagneForGiveaway == 0) {
             printNewLine();

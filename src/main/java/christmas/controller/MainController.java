@@ -4,6 +4,7 @@ import static christmas.domain.event.DiscountCalculator.totalBenefitAmount;
 
 import christmas.domain.date.VisitingDate;
 import christmas.domain.event.DiscountCalculator;
+import christmas.domain.event.EventApplier;
 import christmas.domain.event.EventBadge;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 public class MainController {
     DiscountCalculator calculator = new DiscountCalculator();
+    EventApplier eventApplier = new EventApplier();
 
     public void start() {
         // 1. 식당 방문일 등록
@@ -21,9 +23,9 @@ public class MainController {
         // 2. 주문메뉴와 개수 등록
         Order order = generateOrderDetails(visitingDate);
         // 3. 증정이벤트 적용
-        applyGiveawayEvent(calculator, order);
+        applyGiveawayEvent(eventApplier, order);
         // 4. 할인 적용
-        applyDiscounts(calculator, visitingDate, order);
+        applyDiscounts(calculator, visitingDate, order, eventApplier);
         // 5. 총혜택금액 적용
         int totalBenefitAmount = applyTotalBenefitAmount();
         // 6. 할인 후 예상 결제 금액
@@ -49,20 +51,21 @@ public class MainController {
         return order;
     }
 
-    public void applyGiveawayEvent(DiscountCalculator calculator, Order order) {
-        calculator.calculateGiveAwayEvent(order);
-        OutputView.printGiveaway();
+    public void applyGiveawayEvent(EventApplier eventApplier, Order order) {
+        eventApplier.calculateGiveAwayEvent(order);
+        OutputView.printGiveaway(eventApplier);
     }
 
-    public void applyDiscounts(DiscountCalculator calculator, VisitingDate visitingDate, Order order) {
+    public void applyDiscounts(DiscountCalculator calculator, VisitingDate visitingDate, Order order,
+                               EventApplier eventApplier) {
         OutputView.printMessage("<혜택 내역>");
         Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
-        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator);
+        printDiscountOrMessage(discountAmounts, visitingDate, order, calculator, eventApplier);
     }
 
 
     public void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
-                                       DiscountCalculator calculator) {
+                                       DiscountCalculator calculator, EventApplier eventApplier) {
         int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
         int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
         int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
@@ -76,12 +79,12 @@ public class MainController {
 
         if (totalDiscount != 0 && calculator.isEligibleForEvents(dDayDiscountAmount, everyDayDiscountAmount,
                 specialDiscountAmount, order)) {
-            OutputView.printDiscount(discountAmounts, visitingDate, calculator.getGiveawayBenefit());
+            OutputView.printDiscount(discountAmounts, visitingDate, eventApplier.getGiveawayBenefit());
         }
     }
 
     public int applyTotalBenefitAmount() {
-        DiscountCalculator.calculateTotalBenefitAmount();
+        DiscountCalculator.calculateTotalBenefitAmount(eventApplier);
         int totalBenefitAmount = DiscountCalculator.getTotalBenefitAmount();
         OutputView.printTotalBenefitAmount(totalBenefitAmount);
         return totalBenefitAmount;
