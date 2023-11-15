@@ -1,9 +1,8 @@
 package christmas.domain.order;
 
 import christmas.utils.Constants;
-import christmas.view.OutputView;
-import java.text.DecimalFormat;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Order {
     private final List<String> menuNames;
@@ -33,31 +32,19 @@ public class Order {
         return orderedMenus;
     }
 
-    public void printTotalPriceBeforeDiscount() {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        OutputView.printMessage("<할인 전 총주문 금액>");
-        OutputView.printMessage(formatter.format(totalPriceBeforeDiscount) + "원");
+    private int getCountByMenuType(Predicate<Menu> predicate) {
+        return orderedMenus.stream()
+                .filter(predicate)
+                .mapToInt(Menu::getQuantity)
+                .sum();
     }
 
-
     public int getDessertCount() {
-        int dessertCount = 0;
-        for (Menu menu : orderedMenus) {
-            if (menu.isDessert()) {
-                dessertCount += menu.getQuantity();
-            }
-        }
-        return dessertCount;
+        return getCountByMenuType(Menu::isDessert);
     }
 
     public int getMainCount() {
-        int mainCount = 0;
-        for (Menu menu : orderedMenus) {
-            if (menu.isMain()) {
-                mainCount += menu.getQuantity();
-            }
-        }
-        return mainCount;
+        return getCountByMenuType(Menu::isMain);
     }
 
     public boolean isTotalPriceAboveThreshold() {
