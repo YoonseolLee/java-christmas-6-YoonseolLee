@@ -108,6 +108,6 @@ public class MainController {
     }
 
     private void printTotalPriceBeforeDiscount(Order order) {
-        order.printTotalPriceBeforeDiscount();
+        OutputView.printTotalPriceBeforeDiscount(order);
     }
 }

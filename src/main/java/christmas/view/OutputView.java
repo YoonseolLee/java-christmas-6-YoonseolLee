@@ -3,6 +3,7 @@ package christmas.view;
 import christmas.domain.date.VisitingDate;
 import christmas.domain.event.EventApplier;
 import christmas.domain.order.Menu;
+import christmas.domain.order.Order;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,12 @@ public class OutputView {
         orderedMenus.forEach(menu ->
                 printMessage(menu.getMenuBoard().toString() + " " + menu.getQuantity() + "개"));
         printNewLine();
+    }
+
+    public static void printTotalPriceBeforeDiscount(Order order) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        OutputView.printMessage("<할인 전 총주문 금액>");
+        OutputView.printMessage(formatter.format(order.getTotalPriceBeforeDiscount()) + "원");
     }
 
     public static void printGiveaway(EventApplier eventApplier) {
