@@ -19,7 +19,7 @@ public class Order {
     }
 
     public boolean hasValidTotalPriceForEvents() {
-        return totalPriceBeforeDiscount >= 10000;
+        return totalPriceBeforeDiscount >= Constants.MINIMUM_PRICE_FOR_ALL_EVENTS;
     }
 
     private int calculateTotalPriceBeforeDiscount() {

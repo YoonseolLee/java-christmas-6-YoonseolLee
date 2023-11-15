@@ -1,5 +1,6 @@
 package christmas.domain.date;
 
+import christmas.utils.Constants;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
@@ -18,7 +19,7 @@ public class VisitingDate {
 
     public boolean isDdayDiscountPeriod() {
         int day = visitingDate.getDayOfMonth();
-        return day >= 1 && day <= 25;
+        return day >= Constants.FIRST_DAY_FOR_DDAY_EVENT && day <= Constants.LAST_DAY_FOR_DDAY_EVENT;
     }
 
     public boolean isSpecialDiscountDay() {

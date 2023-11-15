@@ -30,7 +30,7 @@ public class DiscountCalculator {
         if (!visitingDate.isSpecialDiscountDay() || !order.hasValidTotalPriceForEvents()) {
             return 0;
         }
-        return -1000;
+        return Constants.SPEICAL_DISCOUNT_AMOUNT;
     }
 
     public Map<String, Integer> calculateDiscountAmount(VisitingDate visitingDate, Order order) {
