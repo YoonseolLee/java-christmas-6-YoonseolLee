@@ -7,6 +7,7 @@ import christmas.domain.event.EventBadge;
 import christmas.domain.event.TotalBenefitAmountCalculator;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
+import christmas.utils.GameMessage;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
@@ -51,21 +52,21 @@ public class MainController {
         return order;
     }
 
-    public void applyGiveawayEvent(EventApplier eventApplier, Order order) {
+    private void applyGiveawayEvent(EventApplier eventApplier, Order order) {
         eventApplier.calculateGiveAwayEvent(order);
         OutputView.printGiveaway(eventApplier);
     }
 
-    public void applyDiscounts(DiscountCalculator calculator, VisitingDate visitingDate, Order order,
-                               EventApplier eventApplier) {
-        OutputView.printMessage("<혜택 내역>");
+    private void applyDiscounts(DiscountCalculator calculator, VisitingDate visitingDate, Order order,
+                                EventApplier eventApplier) {
+        OutputView.printMessage(GameMessage.BENEFIT_DETAILS.getMessage());
         Map<String, Integer> discountAmounts = calculator.calculateDiscountAmount(visitingDate, order);
         printDiscountOrMessage(discountAmounts, visitingDate, order, calculator, eventApplier);
     }
 
 
-    public void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
-                                       DiscountCalculator calculator, EventApplier eventApplier) {
+    private void printDiscountOrMessage(Map<String, Integer> discountAmounts, VisitingDate visitingDate, Order order,
+                                        DiscountCalculator calculator, EventApplier eventApplier) {
         int dDayDiscountAmount = discountAmounts.getOrDefault("D-Day Discount Amount", 0);
         int everyDayDiscountAmount = discountAmounts.getOrDefault("Every Day Discount Amount", 0);
         int specialDiscountAmount = discountAmounts.getOrDefault("Special Discount Amount", 0);
@@ -73,7 +74,7 @@ public class MainController {
         int totalDiscount = dDayDiscountAmount + everyDayDiscountAmount + specialDiscountAmount;
 
         if (totalDiscount == 0) {
-            OutputView.printMessage("없음");
+            OutputView.printMessage(GameMessage.NONE_MESSAGE.getMessage());
             OutputView.printNewLine();
         }
 
@@ -83,20 +84,20 @@ public class MainController {
         }
     }
 
-    public int applyTotalBenefitAmount(TotalBenefitAmountCalculator totalBenefitAmountCalculator,
-                                       DiscountCalculator discountCalculator) {
+    private int applyTotalBenefitAmount(TotalBenefitAmountCalculator totalBenefitAmountCalculator,
+                                        DiscountCalculator discountCalculator) {
         totalBenefitAmountCalculator.calculateTotalBenefitAmount(discountCalculator, eventApplier);
         int totalBenefitAmount = totalBenefitAmountCalculator.getTotalBenefitAmount();
         OutputView.printTotalBenefitAmount(totalBenefitAmount);
         return totalBenefitAmount;
     }
 
-    public void applyTotalPriceAfterDiscount(int totalBenefitAmount, Order order) {
+    private void applyTotalPriceAfterDiscount(int totalBenefitAmount, Order order) {
         int totalPriceAfterDiscount = order.getTotalPriceAfterDiscount(totalBenefitAmount);
         OutputView.printTotalPriceAfterDiscount(totalPriceAfterDiscount);
     }
 
-    public void applyEventBadge(int totalBenefitAmount) {
+    private void applyEventBadge(int totalBenefitAmount) {
         String eventBadge = EventBadge.getBadgeByTotalBenefitAmount(-totalBenefitAmount);
         OutputView.printEventBadge(eventBadge);
     }

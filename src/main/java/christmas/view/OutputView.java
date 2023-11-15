@@ -4,26 +4,29 @@ import christmas.domain.date.VisitingDate;
 import christmas.domain.event.EventApplier;
 import christmas.domain.order.Menu;
 import christmas.domain.order.Order;
+import christmas.utils.Constants;
+import christmas.utils.GameMessage;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
     public static void printEventPreview(VisitingDate visitingDate) {
-        printFormattedMessage("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n", visitingDate.getDayOfMonth());
+        printFormattedMessage(GameMessage.BENEFIT_PREVIEW_ON_VISITING_DATE_MESSAGE.getMessage(),
+                visitingDate.getDayOfMonth());
         printNewLine();
     }
 
     public static void printOrderedMenus(List<Menu> orderedMenus) {
-        printMessage("<주문 메뉴>");
+        printMessage(GameMessage.ORDERED_MENU.getMessage());
         orderedMenus.forEach(menu ->
                 printFormattedMessage("%s %d개%n", menu.getMenuBoard(), menu.getQuantity()));
         printNewLine();
     }
 
     public static void printTotalPriceBeforeDiscount(Order order) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        printMessage("<할인 전 총주문 금액>");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
+        printMessage(GameMessage.TOTAL_PRICE_BEFORE_DISCOUNT.getMessage());
         printMessage(formatter.format(order.getTotalPriceBeforeDiscount()) + "원");
     }
 
@@ -32,8 +35,8 @@ public class OutputView {
 
         if (champagneForGiveaway == 0) {
             printNewLine();
-            printMessage("<증정 메뉴>");
-            System.out.println("없음");
+            printMessage(GameMessage.GIVEAWAY_MENU.getMessage());
+            printMessage(GameMessage.NONE_MESSAGE.getMessage());
             printNewLine();
             return;
         }
@@ -46,7 +49,7 @@ public class OutputView {
 
     public static void printGiveaways(int champagneForGiveaway) {
         printNewLine();
-        printMessage("<증정 메뉴>");
+        printMessage(GameMessage.GIVEAWAY_MENU.getMessage());
         printFormattedMessage("샴페인 %d개%n", champagneForGiveaway);
     }
 
@@ -62,53 +65,53 @@ public class OutputView {
     }
 
     public static void printDdayDiscountAmount(int dDayDiscountAmount) {
-        printFormattedMessage("크리스마스 디데이 할인: %s원%n", formatCurrency(dDayDiscountAmount));
+        printFormattedMessage(GameMessage.CHRISTMAS_DDAY_DISCOUNT.getMessage(), formatCurrency(dDayDiscountAmount));
     }
 
     public static void printEveryDayDiscountAmount(int everyDayDiscountAmount, VisitingDate visitingDate) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
         String formattedDiscount = formatter.format(everyDayDiscountAmount) + "원";
 
         if (visitingDate.isWeekend()) {
-            printFormattedMessage("주말 할인: %s%n", formattedDiscount);
+            printFormattedMessage(GameMessage.WEEKND_DISCOUNT.getMessage(), formattedDiscount);
         }
         if (!visitingDate.isWeekend()) {
-            printFormattedMessage("평일 할인: %s%n", formattedDiscount);
+            printFormattedMessage(GameMessage.WEEKDAY_DISCOUNT.getMessage(), formattedDiscount);
         }
     }
 
     public static void printSpecialDiscountAmount(int specialDiscountAmount) {
-        printFormattedMessage("특별 할인: %s원%n", formatCurrency(specialDiscountAmount));
+        printFormattedMessage(GameMessage.SPECIAL_DISCOUNT.getMessage(), formatCurrency(specialDiscountAmount));
     }
 
     public static void printGiveawayBenefit(int giveawayBenefit) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
         String formattedBenefit = formatter.format(giveawayBenefit);
-        printFormattedMessage("증정 이벤트: %s원%n", formattedBenefit);
+        printFormattedMessage(GameMessage.GIVEAWAY_EVENT.getMessage(), formattedBenefit);
         printNewLine();
     }
 
     public static void printTotalBenefitAmount(int totalBenefitAmount) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        printMessage("<총혜택 금액>");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
+        printMessage(GameMessage.TOTAL_BENEFIT_AMOUNT.getMessage());
         printMessage(formatter.format(totalBenefitAmount) + "원");
         printNewLine();
     }
 
     public static void printTotalPriceAfterDiscount(int totalPriceAfterDiscount) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        printMessage("<할인 후 예상 결제 금액>");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
+        printMessage(GameMessage.ESTIMATED_PRICE_AFTER_DISCOUNT.getMessage());
         printMessage(formatter.format(totalPriceAfterDiscount) + "원");
     }
 
     public static void printEventBadge(String eventBadge) {
         printNewLine();
-        printMessage("<12월 이벤트 배지>");
+        printMessage(GameMessage.DECEMBER_EVENT_BADGE.getMessage());
         printMessage(eventBadge);
     }
 
     private static String formatCurrency(int amount) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
+        DecimalFormat formatter = new DecimalFormat(Constants.NUMBER_FORMAT_PATTERN);
         return formatter.format(amount);
     }
 
